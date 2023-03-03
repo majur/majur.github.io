@@ -3,7 +3,6 @@ title: Maratón Pohronským Inovcom 2018
 author: juraj
 date: 2018-03-09 11:33:00 +0800
 categories: [Beh]
-tags: [beh]
 math: true
 mermaid: true
 image:

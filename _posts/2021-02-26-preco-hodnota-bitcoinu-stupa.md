@@ -3,7 +3,6 @@ title: Prečo hodnota Bitcoinu stúpa?
 author: juraj
 date: 2021-02-26 11:33:00 +0800
 categories: [Sloboda, Bitcoin]
-tags: [sloboda, bitcoin]
 math: true
 mermaid: true
 pin: true

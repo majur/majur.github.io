@@ -3,7 +3,6 @@ title: Trumpov twitter a sloboda slova
 author: juraj
 date: 2021-01-15 11:33:00 +0800
 categories: [Sloboda]
-tags: [sloboda, anarchizmus]
 math: true
 mermaid: true
 image:
