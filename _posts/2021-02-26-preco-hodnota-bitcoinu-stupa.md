@@ -5,7 +5,7 @@ date: 2021-02-26 11:33:00 +0800
 categories: [Sloboda, Bitcoin]
 math: true
 mermaid: true
-pin: true
+pin: false
 image:
   path: /assets/img/bitcoin.jpg
   lqip:
