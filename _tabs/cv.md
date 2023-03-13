@@ -72,3 +72,8 @@ My hobby is Ruby on Rails and when I got the opportunity to work in a company wh
 | Team communication               | ⭐️⭐️⭐️⭐️⭐️   | I have a facilitation course      |
 | Learning new things              | ⭐️⭐️⭐️⭐️   | I learn fast      |
 | Business focused              | ⭐️⭐️⭐️⭐️⭐️   | My goal is to make the company successful      |
+
+---
+
+> Download as a `.pdf` [here](/assets/cv/Juraj_Maťaše_CV.pdf).
+{: .prompt-tip }
