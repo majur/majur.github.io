@@ -1,0 +1,91 @@
+# The layout text of site
+
+# ----- Commons label -----
+
+layout:
+  post: Príspevok
+  category: Kategória
+  tag: Štítok
+
+# The tabs of sidebar
+tabs:
+  # format: <filename_without_extension>: <value>
+  home: Domov
+  categories: Kategórie
+  tags: Štítky
+  archives: Archívy
+  about: O mne
+
+# the text displayed in the search bar & search results
+search:
+  hint: hľadať
+  cancel: Zrušiť
+  no_results: Ups! Žiadny výsledok sa nenašiel.
+
+panel:
+  lastmod: Nedávno aktualizované
+  trending_tags: Trendy štítky
+  toc: Obsah
+
+copyright:
+  # Shown at the bottom of the post
+  license:
+    template: Tento príspevok je licencovaný pod :LICENSE_NAME autorom.
+    name: CC BY 4.0
+    link: https://creativecommons.org/licenses/by/4.0/
+
+  # Displayed in the footer
+  brief: Niektoré práva Vyhradené.
+  verbose: >-
+    Ak nie je uvedené inak, príspevky na tejto stránke sú licencované
+    pod licenciou Creative Commons Attribution 4.0 International (CC BY 4.0).
+
+meta: Používa :PLATFORM s témou :THEME.
+
+not_found:
+  statment: Ospravedlňujeme sa, nesprávne sme umiestnili adresu URL alebo odkazuje na niečo, čo neexistuje.
+
+notification:
+  update_found: K dispozícii je nová verzia obsahu.
+  update: Aktualizovať
+
+# ----- Posts related labels -----
+
+post:
+  written_by: Od
+  posted: Zverejnené
+  updated: Aktualizované
+  words: slov
+  pageview_measure: zobrazení
+  read_time:
+    unit: minút
+    prompt: čítania
+  relate_posts: Ďalšie príspevky
+  share: Zdieľať
+  button:
+    next: Novší
+    previous: Starší
+    copy_code:
+      succeed: Skopírované!
+    share_link:
+      title: Kopírovať odkaz
+      succeed: Skopírované!
+  # pinned prompt of posts list on homepage
+  pin_prompt: Pripnuté
+
+# Date time format.
+# See: <http://strftime.net/>, <https://day.js.org/docs/en/display/format>
+df:
+  post:
+    strftime: '%b %e, %Y'
+    dayjs: 'll'
+  archives:
+    strftime: '%b'
+    dayjs: 'MMM'
+
+# categories page
+categories:
+  category_measure: kategorie
+  post_measure:
+    singular: príspevok
+    plural: príspevky
