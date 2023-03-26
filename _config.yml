@@ -198,9 +198,9 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
-  # permalink_en:
-  #   tag: /en/tags/:name/
-  #   category: /en/categories/:name/
+  permalink_en:
+    tag: /en/tags/:name/
+    category: /en/categories/:name/
 
 plugins:
   - jekyll-target-blank
