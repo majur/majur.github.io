@@ -1,11 +1,8 @@
 ---
 title: CV
 author: juraj
-icon: fas fa-file
+# icon: fas fa-file
 order: 4
-image:
-  path: /commons/devices-mockup.png
-  alt: Responsive rendering of Chirpy theme on multiple devices.
 ---
 
 # Juraj Maťaše - Ruby on Rails developer
