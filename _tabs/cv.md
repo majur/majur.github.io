@@ -20,17 +20,12 @@ order: 4
 
 
 ## 👨‍💻 Work experience
-### Web developer
 
-`Freelancer, Trnava – (2012 - 2016)`
+### Senior QA Tester
 
-As a free spirit, I longed for independence and I was working as a freelancer for almost 4 years. I held the role of developer, tester, and project manager. I used WordPress, HTML and CSS for web development. I gained experience as an administrator on various hosting providers.
+`NER System s.r.o., Bratislava – (2020 - Today)`
 
-### QA Tester
-
-`Indra Avitech s.r.o., Bratislava – (2016 - 2018)`
-
-I started working at Avitech as a QA Tester. My responsibility was to test web and desktop apps. I also had to maintain the test suite and write test scenarios for new features.
+My hobby is Ruby on Rails and when I got the opportunity to work in a company where they develop RoR application, I jumped at it. In a small team I take care of testing as the only tester. That's why automation is important, and I wrote a set of regression tests in Cypress. We have apps for iOS and Android for managing employee attendance, which I am also testing.
 
 ### Test Manager
 
@@ -38,11 +33,17 @@ I started working at Avitech as a QA Tester. My responsibility was to test web a
 
 After a year and a half I got the opportunity to lead a team of testers at Avitech and I took it. I was responsible for meeting team goals, communicating with other departments and taking care of team members. I participated in interviews with candidates and was in charge of on-boarding new colleagues. At the beginning of the COVID-19 pandemic, we were forced to go fully remote team, and it was my responsibility to transition the team to a different way of working.
 
-### Senior QA Tester
+### QA Tester
 
-`NER System s.r.o., Bratislava – (2020 - Today)`
+`Indra Avitech s.r.o., Bratislava – (2016 - 2018)`
 
-My hobby is Ruby on Rails and when I got the opportunity to work in a company where they develop RoR application, I jumped at it. In a small team I take care of testing as the only tester. That's why automation is important, and I wrote a set of regression tests in Cypress. We have apps for iOS and Android for managing employee attendance, which I am also testing.
+I started working at Avitech as a QA Tester. My responsibility was to test web and desktop apps. I also had to maintain the test suite and write test scenarios for new features.
+
+### Web developer
+
+`Freelancer, Trnava – (2012 - 2016)`
+
+As a free spirit, I longed for independence and I was working as a freelancer for almost 4 years. I held the role of developer, tester, and project manager. I used WordPress, HTML and CSS for web development. I gained experience as an administrator on various hosting providers.
 
 <h2>🛠 Skills</h2>
 
@@ -69,6 +70,16 @@ My hobby is Ruby on Rails and when I got the opportunity to work in a company wh
 | Team communication               | ⭐️⭐️⭐️⭐️⭐️   | I have a facilitation course      |
 | Learning new things              | ⭐️⭐️⭐️⭐️   | I learn fast      |
 | Business focused              | ⭐️⭐️⭐️⭐️⭐️   | My goal is to make the company successful      |
+
+---
+
+| Education / Courses                     | Year         | Note |
+|:-----------------------------|:-----------------|--------:|
+| Secondary vocational school of energetics | 2002 - 2006 | Automation industry |
+| ISTQB               | 2018   |   Foundation level   |
+| Team leadership course             | 2018 | Meetings, giving feedback, team leadership,...    |
+| Facilitation course              | 2019   | How to guide a meetings |
+| Cypress             | 2021   | Test automation |
 
 ---
 
