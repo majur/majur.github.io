@@ -196,9 +196,11 @@ jekyll-archives:
     category: category
     tag: tag
   permalinks:
+    home: /
     tag: /tags/:name/
     category: /categories/:name/
   permalink_en:
+    home: /en/
     tag: /en/tags/:name/
     category: /en/categories/:name/
 
