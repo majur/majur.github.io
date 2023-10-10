@@ -4,6 +4,17 @@ layout: default
 
 {% include assets-origin.html %}
 
+<style>
+  .pombo {
+    margin: auto;  
+    padding: 10px;
+    text-align: center;
+  }
+  .pomboinput {
+    margin: 10px;
+  }
+</style>
+
 <div class="row">
 
   <!-- core -->
@@ -33,8 +44,16 @@ layout: default
 
     </div>
   </div> <!-- #core-wrapper -->
-
+  
   <!-- panel -->
+  <form action="https://pombomailer.com/n/juraj/public/subscribers" accept-charset="UTF-8" method="post", class="pombo">
+    <h2>Subscribe for my newsletter</h2>
+    <div class="title_1695722682"><style media="screen">.title_1695722682 {display:none;}</style><label for="title">If you are a human, ignore this field</label><input type="text" name="title" id="title" autocomplete="off" tabindex="-1" /></div>
+    <div style: "justify-content: center;">
+      <input placeholder="Email address" type="email" name="subscriber[email]", class="pomboinput">
+      <input type="submit" name="commit" value="Subscribe", class="pomboinput">
+    </div>
+  </form>
   <div id="panel-wrapper" class="col-xl-3 pl-2 text-muted">
 
     <div class="access">
@@ -47,11 +66,13 @@ layout: default
       {% include {{ _include_path }} %}
     {% endfor %}
   </div>
+  
 
 </div>
 
 <!-- tail -->
 {% if layout.tail_includes %}
+
 <div class="row">
   <div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4 mt-5">
     {% for _include in layout.tail_includes %}
@@ -61,10 +82,3 @@ layout: default
   </div>
 </div>
 {% endif %}
-<form action="https://pombomailer.com/n/juraj/public/subscribers" accept-charset="UTF-8" method="post">
-  <div class="title_1695722682"><style media="screen">.title_1695722682 {display:none;}</style><label for="title">If you are a human, ignore this field</label><input type="text" name="title" id="title" autocomplete="off" tabindex="-1" /></div>
-  <div style: "justify-content: center;">
-    <input placeholder="Email address" type="email" name="subscriber[email]">
-    <input type="submit" name="commit" value="Subscribe">
-  </div>
-</form>
