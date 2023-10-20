@@ -21,9 +21,15 @@ order: 4
 
 ## 👨‍💻 Work experience
 
+### Automation QA Tester
+
+`Indra Avitech s.r.o., Bratislava – (2023 - Today)`
+
+In early 2023, I returned to Indra Avitech as an automated tester. I write tests in python using pytest and playwright. My responsibility is to write test cases in Gherkin, write new tests and maintain existing ones. I also do manual testing and I am the quality owner of the product. 
+
 ### Senior QA Tester
 
-`NER System s.r.o., Bratislava – (2020 - Today)`
+`NER System s.r.o., Bratislava – (2020 - 2023)`
 
 My hobby is Ruby on Rails and when I got the opportunity to work in a company where they develop RoR application, I jumped at it. In a small team I take care of testing as the only tester. That's why automation is important, and I wrote a set of regression tests in Cypress. We have apps for iOS and Android for managing employee attendance, which I am also testing.
 
@@ -51,16 +57,19 @@ As a free spirit, I longed for independence and I was working as a freelancer fo
 |:-----------------------------|:-----------------|--------:|
 | Software testing         | ⭐️⭐️⭐️⭐️⭐️     | 10 years |
 | HTML and CSS         | ⭐️⭐️⭐️⭐️     | 12 years |
-| Ruby on Rails               | ⭐️⭐️   | 2 years (as a hobby)      |
+| Ruby on Rails               | ⭐️⭐️   | 3 years (as a hobby)      |
 | JavaScript               | ⭐️   | 2 years      |
 | Cypress               | ⭐️⭐️⭐️⭐️   | 2 years      |
-| Git and Github | ⭐️⭐️⭐️ | 2 years   |
+| Python               | ⭐️⭐️⭐️   | 2 years      |
+| Playwright               | ⭐️⭐️   | 1 year      |
+| Git and Github | ⭐️⭐️⭐️ | 3 years   |
 | SQL          | ⭐️     | 2 years |
 | HTTP              | ⭐️    | 1 year      |
 | Jekyll | ⭐️ | New for me   |
 | macOS          | ⭐️⭐️⭐️⭐️⭐️     | 5 years |
 | Linux              | ⭐️⭐️⭐️    | 8 years (as a user)      |
 | Terminal | ⭐️⭐️ | 5 years   |
+| Bitcoin user | ⭐️⭐️⭐️⭐️ | 7 years   |
 
 ---
 
