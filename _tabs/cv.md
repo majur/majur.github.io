@@ -92,5 +92,5 @@ As a free spirit, I longed for independence and I was working as a freelancer fo
 
 ---
 
-> Download as a `.pdf` [here](/assets/cv/Juraj_Maťaše_CV.pdf).
+> Download as a `.pdf` [here](/assets/cv/Juraj_Matase_CV.pdf).
 {: .prompt-tip }
