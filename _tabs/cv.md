@@ -63,7 +63,6 @@ As a free spirit, I longed for independence and I was working as a freelancer fo
 | Python               | ⭐️⭐️⭐️   | 2 years      |
 | Playwright               | ⭐️⭐️   | 1 year      |
 | Git and Github | ⭐️⭐️⭐️ | 3 years   |
-| SQL          | ⭐️     | 2 years |
 | HTTP              | ⭐️    | 1 year      |
 | Jekyll | ⭐️ | New for me   |
 | macOS          | ⭐️⭐️⭐️⭐️⭐️     | 5 years |
