@@ -5,7 +5,7 @@ author: juraj
 order: 4
 ---
 
-# Juraj Maťaše - Ruby on Rails developer
+# Juraj Maťaše
 
 ![Desktop View](/assets/img/avatar.jpeg){: width="256" height="256" .w-50 .left}
 ## ☎️ Contact
@@ -58,17 +58,17 @@ As a free spirit, I longed for independence and I was working as a freelancer fo
 | Software testing         | ⭐️⭐️⭐️⭐️⭐️     | 10 years |
 | HTML and CSS         | ⭐️⭐️⭐️⭐️     | 12 years |
 | Ruby on Rails               | ⭐️⭐️   | 3 years (as a hobby)      |
-| JavaScript               | ⭐️   | 2 years      |
+| JavaScript               | ⭐️⭐️⭐️   | 2 years      |
 | Cypress               | ⭐️⭐️⭐️⭐️   | 2 years      |
 | Python               | ⭐️⭐️⭐️   | 2 years      |
-| Playwright               | ⭐️⭐️   | 1 year      |
+| Playwright               | ⭐️⭐️⭐️   | 1 year      |
 | Git and Github | ⭐️⭐️⭐️ | 3 years   |
 | HTTP              | ⭐️    | 1 year      |
-| Jekyll | ⭐️ | New for me   |
+| Jekyll | ⭐️⭐️ | 1 year   |
 | macOS          | ⭐️⭐️⭐️⭐️⭐️     | 5 years |
 | Linux              | ⭐️⭐️⭐️    | 8 years (as a user)      |
 | Terminal | ⭐️⭐️ | 5 years   |
-| Bitcoin user | ⭐️⭐️⭐️⭐️ | 7 years   |
+| Backend testing | ⭐️⭐️⭐️⭐️ | 1 year   |
 
 ---
 

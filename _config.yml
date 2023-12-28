@@ -11,7 +11,7 @@ baseurl: ''
 # If it has the same name as one of the files in folder `_data/locales`, the layout language will also be changed,
 # otherwise, the layout language will use the default value of 'en'.
 lang: sk-SK
-languages: ["sk-SK", "en"]
+languages: ["sk-SK"]
 
 
 # Change to your timezone › http://www.timezoneconverter.com/cgi-bin/findzone/findzone
@@ -157,7 +157,6 @@ defaults:
     values:
       layout: page
       permalink: /:title/
-      permalink_en: /en/:title/
   - scope:
       path: assets/img/favicons
     values:
@@ -198,10 +197,6 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
-  permalink_en:
-    tag: /en/tags/:name/
-    category: /en/categories/:name/
 
 plugins:
   - jekyll-target-blank
-  - jekyll-multiple-languages-plugin

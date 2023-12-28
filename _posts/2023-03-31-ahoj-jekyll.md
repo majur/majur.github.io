@@ -13,7 +13,7 @@ image:
   alt: Jekyll logo
 ---
 
-Mám nový web. Donedávna bežal na mojom Rails projekte [Blog on Rails](https://github.com/majur/blog-on-rails). S ním sa mi ale nedarí napredovať tak rýchlo ako by som potreboval, a preto som sa rozhodol svoj web zmigrovať na [Jekyll](https://jekyllrb.com). O tomto generátore statických stránok písanom v Ruby som vedel už dlho, ale až pred pár týždnami som si ho vyskúšal. A hneď som si ho zamiloval. Mám z neho podobné pocity aké som mal na mojom začiatku s Ruby on Rails. Zadám pár príkazov do terminálu, a zrazu mi beží nový web v prehliadači.
+Mám nový web. Donedávna bežal na mojom Rails projekte [Blog on Rails](https://github.com/majur/blog-on-rails-legacy). S ním sa mi ale nedarí napredovať tak rýchlo ako by som potreboval, a preto som sa rozhodol svoj web zmigrovať na [Jekyll](https://jekyllrb.com). O tomto generátore statických stránok písanom v Ruby som vedel už dlho, ale až pred pár týždnami som si ho vyskúšal. A hneď som si ho zamiloval. Mám z neho podobné pocity aké som mal na mojom začiatku s Ruby on Rails. Zadám pár príkazov do terminálu, a zrazu mi beží nový web v prehliadači.
 ## Ako to funguje? 
 Funguje to tak že mám šablónu (konkrétne [túto](https://github.com/cotes2020/jekyll-theme-chirpy)), ktorá zabezpečuje kde na stránke sa má čo zobraziť, a ako to má vyzerať. Samotný obsah potom píšem v markdowne čo je jazyk určený na písanie formátovaného textu. Vyzerá cca takto:
 
