@@ -2,7 +2,7 @@
 title: CV
 author: juraj
 # icon: fas fa-file
-order: 4
+order: 5
 ---
 
 # Juraj Maťaše
@@ -21,9 +21,15 @@ order: 4
 
 ## 👨‍💻 Work experience
 
+### Test Design Professional
+
+`Siemens s.r.o., Bratislava – (2024 - Today)`
+
+Today, I am working at Siemens on a project where we are developing firmware for controllers that control thermostats in office buildings. Our stack is in Python, and we work a lot with Linux.
+
 ### Automation QA Tester
 
-`Indra Avitech s.r.o., Bratislava – (2023 - Today)`
+`Indra Avitech s.r.o., Bratislava – (2023 - 2024)`
 
 In early 2023, I returned to Indra Avitech as an automated tester. I write tests in python using pytest and playwright. My responsibility is to write test cases in Gherkin, write new tests and maintain existing ones. I also do manual testing and I am the quality owner of the product. 
 
@@ -55,20 +61,21 @@ As a free spirit, I longed for independence and I was working as a freelancer fo
 
 | Hard skills                      | Current level          | Experience |
 |:-----------------------------|:-----------------|--------:|
-| Software testing         | ⭐️⭐️⭐️⭐️⭐️     | 10 years |
-| HTML and CSS         | ⭐️⭐️⭐️⭐️     | 12 years |
-| Ruby on Rails               | ⭐️⭐️   | 3 years (as a hobby)      |
-| JavaScript               | ⭐️⭐️⭐️   | 2 years      |
-| Cypress               | ⭐️⭐️⭐️⭐️   | 2 years      |
-| Python               | ⭐️⭐️⭐️   | 2 years      |
-| Playwright               | ⭐️⭐️⭐️   | 1 year      |
-| Git and Github | ⭐️⭐️⭐️ | 3 years   |
-| HTTP              | ⭐️    | 1 year      |
-| Jekyll | ⭐️⭐️ | 1 year   |
-| macOS          | ⭐️⭐️⭐️⭐️⭐️     | 5 years |
-| Linux              | ⭐️⭐️⭐️    | 8 years (as a user)      |
-| Terminal | ⭐️⭐️ | 5 years   |
-| Backend testing | ⭐️⭐️⭐️⭐️ | 1 year   |
+| Software testing         | ⭐️⭐️⭐️⭐️⭐️     | 11 years |
+| HTML and CSS         | ⭐️⭐️⭐️⭐️     | 13 years |
+| Ruby on Rails               | ⭐️⭐️⭐️   | 4 years (as a hobby)      |
+| JavaScript               | ⭐️⭐️⭐️   | 3 years      |
+| Cypress               | ⭐️⭐️⭐️⭐️   | 3 years      |
+| Python               | ⭐️⭐️⭐️   | 3 years      |
+| Playwright               | ⭐️⭐️⭐️   | 2 year      |
+| Git and Github | ⭐️⭐️⭐️ | 4 years   |
+| HTTP              | ⭐️⭐️    | 2 year      |
+| Jekyll | ⭐️⭐️ | 2 year   |
+| macOS          | ⭐️⭐️⭐️⭐️⭐️     | 6 years |
+| Linux              | ⭐️⭐️⭐️⭐️    | 9 years (as a user)      |
+| Terminal | ⭐️⭐️ | 6 years   |
+| Backend testing | ⭐️⭐️⭐️⭐️ | 2 year   |
+| Embedded testing | ⭐️ | For a few months |
 
 ---
 
