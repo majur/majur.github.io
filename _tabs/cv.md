@@ -21,7 +21,7 @@ order: 5
 
 ## 👨‍💻 Work experience
 
-### Test Design Professional
+### Automation QA Tester
 
 `Siemens s.r.o., Bratislava – (2024 - Today)`
 
@@ -69,7 +69,7 @@ As a free spirit, I longed for independence and I was working as a freelancer fo
 | Python               | ⭐️⭐️⭐️   | 3 years      |
 | Playwright               | ⭐️⭐️⭐️   | 2 year      |
 | Git and Github | ⭐️⭐️⭐️ | 4 years   |
-| HTTP              | ⭐️⭐️    | 2 year      |
+| SQL              | ⭐️⭐️⭐️    | 3 years      |
 | Jekyll | ⭐️⭐️ | 2 year   |
 | macOS          | ⭐️⭐️⭐️⭐️⭐️     | 6 years |
 | Linux              | ⭐️⭐️⭐️⭐️    | 9 years (as a user)      |
