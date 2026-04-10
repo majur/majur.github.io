@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="sk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to create simple backend with Rails — Návrh 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME VARIABLES ── */
+  [data-theme="light"] {
+    --bg: #F7F3EC;
+    --bg-alt: #EDE7DA;
+    --bg-hero: #1C2B3A;
+    --text: #1C2B3A;
+    --text-muted: #6B7E8A;
+    --accent: #C9A84C;
+    --accent-light: #E8C96A;
+    --accent-dark: #A8872E;
+    --accent-subtle: rgba(201,168,76,0.08);
+    --border: #D9CFBC;
+    --card-bg: #FFFFFF;
+    --card-shadow: 0 2px 12px rgba(28,43,58,0.06);
+    --nav-bg: rgba(247,243,236,0.92);
+    --code-bg: #F0ECE4;
+    --code-text: #3C5068;
+    --hero-text: #F7F3EC;
+    --hero-muted: #8A9BAA;
+  }
+
+  [data-theme="dark"] {
+    --bg: #111920;
+    --bg-alt: #16202A;
+    --bg-hero: #0C1118;
+    --text: #E0DDD6;
+    --text-muted: #6E7D8C;
+    --accent: #D4B45A;
+    --accent-light: #E8C96A;
+    --accent-dark: #B89930;
+    --accent-subtle: rgba(212,180,90,0.08);
+    --border: #222E3A;
+    --card-bg: #1A2430;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    --nav-bg: rgba(17,25,32,0.92);
+    --code-bg: #162030;
+    --code-text: #C8D0D8;
+    --hero-text: #E0DDD6;
+    --hero-muted: #5A6A7A;
+  }
+
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--accent-light); }
+
+  /* ── NAV ── */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .nav-logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .theme-switch {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .theme-switch:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── ARTICLE HERO ── */
+  .article-hero {
+    background: var(--bg-hero);
+    padding: 100px 40px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .article-hero-inner {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .article-breadcrumb {
+    font-size: 12px;
+    color: var(--hero-muted);
+    margin-bottom: 24px;
+  }
+  .article-breadcrumb a { color: var(--hero-muted); }
+  .article-breadcrumb a:hover { color: var(--accent); }
+
+  .article-hero-cat {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .article-hero-cat::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--accent);
+  }
+
+  .article-hero-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--hero-text);
+    margin-bottom: 20px;
+    max-width: 620px;
+  }
+
+  .article-hero-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 14px;
+    color: var(--hero-muted);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .hero-meta-sep {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(138,155,170,0.4);
+  }
+
+  .article-hero-tags {
+    display: flex; gap: 6px;
+    margin-top: 16px;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    background: rgba(201,168,76,0.12);
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── ARTICLE IMAGE ── */
+  .article-image-wrapper {
+    max-width: 780px;
+    margin: -28px auto 0;
+    padding: 0 40px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .article-image {
+    width: 100%;
+    border-radius: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    aspect-ratio: 16/8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* ── ARTICLE CONTENT ── */
+  .article-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 40px 80px;
+  }
+
+  .article-body {
+    font-size: 17px;
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  .article-body h2 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-top: 56px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .article-body h2::before {
+    content: '';
+    width: 20px; height: 2px;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .article-body h3 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 40px;
+    margin-bottom: 14px;
+  }
+
+  .article-body p { margin-bottom: 22px; }
+
+  .article-body code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+
+  .article-body pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 26px;
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .article-body pre code {
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--code-text);
+  }
+
+  .code-file {
+    position: absolute;
+    top: 10px; right: 14px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.5;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .article-body strong { font-weight: 600; }
+
+  .article-body blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 16px 24px;
+    margin: 32px 0;
+    font-style: italic;
+    color: var(--text-muted);
+    background: var(--accent-subtle);
+    border-radius: 0 10px 10px 0;
+  }
+
+  /* ── SHARE BAR ── */
+  .share-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 0;
+    margin-top: 48px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .share-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-right: 8px;
+  }
+
+  .share-btn {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Nunito', sans-serif;
+  }
+  .share-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── POST NAV ── */
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  .post-nav-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    transition: all 0.2s;
+  }
+  .post-nav-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .post-nav-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .post-nav-title {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .post-nav-card.next { text-align: right; }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--bg-hero);
+    padding: 32px 40px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    color: #F7F3EC;
+  }
+  .footer-logo span { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(247,243,236,0.3);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .article-hero { padding: 90px 20px 40px; }
+    .article-hero-title { font-size: 26px; }
+    .article-image-wrapper { padding: 0 20px; }
+    .article-container { padding: 32px 20px 60px; }
+    .post-nav { grid-template-columns: 1fr; }
+    .nav-container { padding: 0 20px; }
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      Juraj Maťaše
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Blog</a></li>
+      <li><a href="#">Kategórie</a></li>
+      <li><a href="#">Projekty</a></li>
+      <li><a href="#">CV</a></li>
+      <li><button class="theme-switch" onclick="toggleTheme()">☀ / ☾</button></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ARTICLE HERO -->
+<header class="article-hero">
+  <div class="article-hero-inner">
+    <nav class="article-breadcrumb">
+      <a href="index.html">Domov</a> › <span>Článok</span>
+    </nav>
+    <div class="article-hero-cat">Dev</div>
+    <h1 class="article-hero-title">How to create simple backend with Rails</h1>
+    <div class="article-hero-meta">
+      <span>Juraj Maťaše</span>
+      <span class="hero-meta-sep"></span>
+      <span>31. marca 2024</span>
+      <span class="hero-meta-sep"></span>
+      <span>7 min čítania</span>
+    </div>
+    <div class="article-hero-tags">
+      <span class="hero-tag">Rails</span>
+      <span class="hero-tag">Ruby</span>
+      <span class="hero-tag">Backend</span>
+    </div>
+  </div>
+</header>
+
+<!-- COVER IMAGE -->
+<div class="article-image-wrapper">
+  <div class="article-image">
+    [ Ruby on Rails logo — rails-logo.webp ]
+  </div>
+</div>
+
+<!-- ARTICLE CONTENT -->
+<div class="article-container">
+  <article class="article-body">
+
+    <p>A bigger project from my portfolio is a CMS written in Ruby on Rails, which I've called Blog on Rails for now. But I need a few smaller (and sooner finished) projects. The first one is a simple backend for a todo list application. I'm writing it also in Ruby on Rails, but I'm only writing the backend API part.</p>
+
+    <h2>Creating a rails application and generating basic files</h2>
+
+    <p>Ruby on Rails is a great fullstack framework, but for now I'm building only the API. First step is to create a Rails app:</p>
+
+    <pre><span class="code-file">Shell</span><code>rails new todo_rails_backend --api -d sqlite3</code></pre>
+
+    <p>I'm using <code>--api</code> for generating only backend parts. Since I want to use SQLite for the database, I use the command <code>-d sqlite3</code>.</p>
+
+    <p>Moving to app directory:</p>
+
+    <pre><span class="code-file">Shell</span><code>cd todo_rails_backend</code></pre>
+
+    <p>Next I have to generate a Task model:</p>
+
+    <pre><span class="code-file">Shell</span><code>rails generate model Task title:string description:text due_date:date completed:boolean</code></pre>
+
+    <p>This will generate a model, test for the model, and migration. Now I need to generate a controller for Task:</p>
+
+    <pre><span class="code-file">Shell</span><code>rails generate controller Tasks</code></pre>
+
+    <h2>Implementation of Tasks controller</h2>
+
+    <h3>Create Action</h3>
+
+    <p>Now let's implement a task controller. At the beginning we have an empty database and we need to create records. So let's start with the create action.</p>
+
+    <pre><span class="code-file">Ruby</span><code>class TasksController &lt; ApplicationController
+  def create
+    @task = Task.new(task_params)
+
+    if @task.save
+      render json: @task, status: :created, location: @task
+    else
+      render json: @task.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def task_params
+      params.require(:task).permit(:title, :description, :due_date, :completed)
+    end
+end</code></pre>
+
+    <p>We create a new instance of the Task model using the parameters received from the request. Parameters are defined in the private method <code>task_params</code>.</p>
+
+    <p>If the task is successfully saved, the backend renders the JSON representation of the created task along with the HTTP status <code>201 Created</code>. It also includes the <code>Location</code> header pointing to the newly created task's URL.</p>
+
+    <p><strong>Last few steps before creation of the first task.</strong> We need to add resources to <code>routes.rb</code>:</p>
+
+    <pre><span class="code-file">routes.rb</span><code>Rails.application.routes.draw do
+  resources :tasks
+end</code></pre>
+
+    <p>Run database migration:</p>
+
+    <pre><span class="code-file">Shell</span><code>rails db:migrate</code></pre>
+
+  </article>
+
+  <!-- SHARE BAR -->
+  <div class="share-bar">
+    <span class="share-label">Zdieľať</span>
+    <button class="share-btn">Mastodon</button>
+    <button class="share-btn">E-mail</button>
+    <button class="share-btn">Kopírovať odkaz</button>
+  </div>
+
+  <!-- POST NAVIGATION -->
+  <nav class="post-nav">
+    <div class="post-nav-card prev">
+      <div class="post-nav-label">← Predošlý článok</div>
+      <div class="post-nav-title">Ahoj Jekyll!</div>
+    </div>
+    <div class="post-nav-card next">
+      <div class="post-nav-label">Nasledujúci článok →</div>
+      <div class="post-nav-title">—</div>
+    </div>
+  </nav>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Juraj Maťaše<span>.</span></div>
+    <div class="footer-copy">© 2024 · Vytvorené s Jekyll</div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="sk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juraj Maťaše — Návrh 3: Magazínový</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME VARIABLES ── */
+  [data-theme="light"] {
+    --bg: #F7F3EC;
+    --bg-alt: #EDE7DA;
+    --bg-hero: #1C2B3A;
+    --text: #1C2B3A;
+    --text-muted: #6B7E8A;
+    --accent: #C9A84C;
+    --accent-light: #E8C96A;
+    --accent-dark: #A8872E;
+    --accent-subtle: rgba(201,168,76,0.08);
+    --border: #D9CFBC;
+    --card-bg: #FFFFFF;
+    --card-shadow: 0 2px 12px rgba(28,43,58,0.06);
+    --nav-bg: rgba(247,243,236,0.92);
+    --code-bg: #F0ECE4;
+    --code-text: #3C5068;
+  }
+
+  [data-theme="dark"] {
+    --bg: #111920;
+    --bg-alt: #16202A;
+    --bg-hero: #0C1118;
+    --text: #E0DDD6;
+    --text-muted: #6E7D8C;
+    --accent: #D4B45A;
+    --accent-light: #E8C96A;
+    --accent-dark: #B89930;
+    --accent-subtle: rgba(212,180,90,0.08);
+    --border: #222E3A;
+    --card-bg: #1A2430;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    --nav-bg: rgba(17,25,32,0.92);
+    --code-bg: #162030;
+    --code-text: #C8D0D8;
+  }
+
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--accent-light); }
+
+  /* ── NAV ── */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover,
+  .nav-links a.active { color: var(--accent); }
+
+  .theme-switch {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .theme-switch:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── HERO BANNER ── */
+  .hero-banner {
+    background: var(--bg-hero);
+    padding: 100px 40px 60px;
+    margin-bottom: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 40%;
+    background-image: radial-gradient(circle, rgba(201,168,76,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(32px, 4.5vw, 52px);
+    font-weight: 400;
+    line-height: 1.2;
+    color: #F7F3EC;
+    max-width: 600px;
+    margin-bottom: 14px;
+  }
+  .hero-title em { font-style: italic; color: var(--accent); }
+
+  .hero-subtitle {
+    font-size: 16px;
+    font-weight: 300;
+    color: #8A9BAA;
+    max-width: 440px;
+    line-height: 1.65;
+  }
+
+  /* ── GRID CONTAINER ── */
+  .grid-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  /* ── FEATURED POST ── */
+  .featured {
+    margin-bottom: 48px;
+  }
+
+  .featured-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .featured-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .featured-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .featured-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(28,43,58,0.1);
+  }
+
+  [data-theme="dark"] .featured-card:hover {
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .featured-img {
+    background: var(--bg-alt);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 240px;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  .featured-body {
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .featured-cat {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .featured-title {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.35;
+    margin-bottom: 12px;
+  }
+  .featured-title a { color: var(--text); }
+  .featured-title a:hover { color: var(--accent); }
+
+  .featured-excerpt {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 16px;
+  }
+
+  .featured-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .featured-meta-sep {
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  /* ── POST GRID ── */
+  .posts-label {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .posts-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .post-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .post-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(28,43,58,0.08);
+  }
+  [data-theme="dark"] .post-card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  }
+
+  .post-card-accent {
+    height: 3px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .post-card:hover .post-card-accent { transform: scaleX(1); }
+
+  .post-card-body {
+    padding: 24px 22px;
+  }
+
+  .post-card-cat {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+
+  .post-card-title {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.35;
+    margin-bottom: 10px;
+  }
+  .post-card-title a { color: var(--text); }
+  .post-card-title a:hover { color: var(--accent); }
+
+  .post-card-excerpt {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 14px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .post-card-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .post-card-tags {
+    display: flex; gap: 4px;
+  }
+
+  .mini-tag {
+    font-size: 10px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  /* ── SIDEBAR WIDGET ── */
+  .layout-with-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .sidebar-widget {
+    position: sticky;
+    top: 80px;
+  }
+
+  .widget {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  .widget-title {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .widget-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .widget-tag {
+    font-size: 12px;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .widget-tag:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  .widget-social {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .widget-social a {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    transition: all 0.2s;
+  }
+  .widget-social a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--bg-hero);
+    padding: 32px 40px;
+    margin-top: 40px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    color: #F7F3EC;
+  }
+  .footer-logo span { color: var(--accent); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(247,243,236,0.3);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .posts-grid { grid-template-columns: repeat(2, 1fr); }
+    .featured-card { grid-template-columns: 1fr; }
+    .layout-with-sidebar { grid-template-columns: 1fr; }
+    .sidebar-widget { position: static; }
+  }
+
+  @media (max-width: 600px) {
+    .posts-grid { grid-template-columns: 1fr; }
+    .grid-container { padding: 0 20px; }
+    .hero-banner { padding: 90px 20px 40px; }
+    .nav-container { padding: 0 20px; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      Juraj Maťaše
+    </a>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Blog</a></li>
+      <li><a href="#">Kategórie</a></li>
+      <li><a href="#">Projekty</a></li>
+      <li><a href="#">CV</a></li>
+      <li><button class="theme-switch" onclick="toggleTheme()">☀ / ☾</button></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Osobný blog</div>
+    <h1 class="hero-title">Technológie, <em>sloboda</em> a&nbsp;beh</h1>
+    <p class="hero-subtitle">Píšem o programovaní, open source, slobode na internete a občas aj o behu.</p>
+  </div>
+</section>
+
+<div class="grid-container">
+
+  <!-- FEATURED POST -->
+  <section class="featured">
+    <div class="featured-label">Najnovší článok</div>
+    <div class="featured-card">
+      <div class="featured-img">[ Ruby on Rails logo ]</div>
+      <div class="featured-body">
+        <div class="featured-cat">Dev</div>
+        <h2 class="featured-title">
+          <a href="article.html">How to create simple backend with Rails</a>
+        </h2>
+        <p class="featured-excerpt">A bigger project from my portfolio is a CMS written in Ruby on Rails. But I need a few smaller projects first. The first one is a simple backend for a todo list application.</p>
+        <div class="featured-meta">
+          <span>31. mar 2024</span>
+          <span class="featured-meta-sep"></span>
+          <span>7 min čítania</span>
+          <span class="featured-meta-sep"></span>
+          <span class="mini-tag">Rails</span>
+          <span class="mini-tag">Ruby</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS GRID + SIDEBAR -->
+  <div class="layout-with-sidebar">
+    <div>
+      <div class="posts-label">Ďalšie články</div>
+      <div class="posts-grid">
+
+        <article class="post-card">
+          <div class="post-card-accent"></div>
+          <div class="post-card-body">
+            <div class="post-card-cat">Dev</div>
+            <h3 class="post-card-title"><a href="#">Ahoj Jekyll!</a></h3>
+            <p class="post-card-excerpt">Nový blog, nová platforma. Prečo som si vybral Jekyll a ako som ho nastavil pre dvojjazyčný obsah.</p>
+            <div class="post-card-meta">
+              <span>31. mar 2023</span>
+              <div class="post-card-tags"><span class="mini-tag">jekyll</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div class="post-card-accent"></div>
+          <div class="post-card-body">
+            <div class="post-card-cat">Internet</div>
+            <h3 class="post-card-title"><a href="#">Sociálna sieť budúcnosti má 23 rokov</a></h3>
+            <p class="post-card-excerpt">RSS je technológia stará viac ako dve dekády, no stále je jedným z najlepších spôsobov, ako sledovať obsah na webe.</p>
+            <div class="post-card-meta">
+              <span>26. mar 2023</span>
+              <div class="post-card-tags"><span class="mini-tag">Internet</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div class="post-card-accent"></div>
+          <div class="post-card-body">
+            <div class="post-card-cat">Dev</div>
+            <h3 class="post-card-title"><a href="#">Môj setup</a></h3>
+            <p class="post-card-excerpt">Zabudnite na ideálny setup. Nepotrebujete ho. Musíte len začať s tým, čo máte.</p>
+            <div class="post-card-meta">
+              <span>6. okt 2021</span>
+              <div class="post-card-tags"><span class="mini-tag">Dev</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div class="post-card-accent"></div>
+          <div class="post-card-body">
+            <div class="post-card-cat">Sloboda · Bitcoin</div>
+            <h3 class="post-card-title"><a href="#">Prečo hodnota Bitcoinu stúpa?</a></h3>
+            <p class="post-card-excerpt">Bitcoin nie je len špekulatívna bublina. Za jeho rastúcou hodnotou stoja fundamentálne ekonomické princípy.</p>
+            <div class="post-card-meta">
+              <span>26. feb 2021</span>
+              <div class="post-card-tags"><span class="mini-tag">Bitcoin</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div class="post-card-accent"></div>
+          <div class="post-card-body">
+            <div class="post-card-cat">Sloboda</div>
+            <h3 class="post-card-title"><a href="#">Trumpov twitter a sloboda slova</a></h3>
+            <p class="post-card-excerpt">Keď súkromná spoločnosť umlčí prezidenta, musíme sa zamyslieť nad tým, čo znamená sloboda slova v digitálnom veku.</p>
+            <div class="post-card-meta">
+              <span>15. jan 2021</span>
+              <div class="post-card-tags"><span class="mini-tag">Sloboda</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="post-card">
+          <div class="post-card-accent"></div>
+          <div class="post-card-body">
+            <div class="post-card-cat">Beh</div>
+            <h3 class="post-card-title"><a href="#">Maratón Pohronským Inovcom 2018</a></h3>
+            <p class="post-card-excerpt">Zážitok z bežeckého maratónu cez jedno z najkrajších slovenských pohorí.</p>
+            <div class="post-card-meta">
+              <span>9. mar 2018</span>
+              <div class="post-card-tags"><span class="mini-tag">Beh</span></div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar-widget">
+      <div class="widget">
+        <div class="widget-title">Štítky</div>
+        <div class="widget-tags">
+          <a href="#" class="widget-tag">Rails</a>
+          <a href="#" class="widget-tag">Ruby</a>
+          <a href="#" class="widget-tag">Backend</a>
+          <a href="#" class="widget-tag">jekyll</a>
+          <a href="#" class="widget-tag">100DaysToOffload</a>
+        </div>
+      </div>
+
+      <div class="widget">
+        <div class="widget-title">Kontakt</div>
+        <div class="widget-social">
+          <a href="https://github.com/majur">GitHub → majur</a>
+          <a href="https://ruby.social/@juraj">Mastodon → @juraj</a>
+          <a href="#">RSS → feed.xml</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Juraj Maťaše<span>.</span></div>
+    <div class="footer-copy">© 2024 · Vytvorené s Jekyll</div>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+}
+</script>
+</body>
+</html>

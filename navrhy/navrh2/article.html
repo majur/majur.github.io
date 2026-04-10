@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="sk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to create simple backend with Rails — Návrh 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME VARIABLES ── */
+  [data-theme="light"] {
+    --bg: #FDFBF7;
+    --bg-alt: #F5F1EA;
+    --text: #1C2B3A;
+    --text-muted: #6B7E8A;
+    --accent: #C9A84C;
+    --accent-light: #E8C96A;
+    --accent-subtle: rgba(201,168,76,0.08);
+    --border: #E8E2D6;
+    --nav-bg: rgba(253,251,247,0.92);
+    --code-bg: #F0ECE4;
+    --code-text: #3C5068;
+  }
+
+  [data-theme="dark"] {
+    --bg: #12171E;
+    --bg-alt: #182028;
+    --text: #E0DDD6;
+    --text-muted: #6E7D8C;
+    --accent: #D4B45A;
+    --accent-light: #E8C96A;
+    --accent-subtle: rgba(212,180,90,0.08);
+    --border: #242E3A;
+    --nav-bg: rgba(18,23,30,0.92);
+    --code-bg: #1A2230;
+    --code-text: #C8D0D8;
+  }
+
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--accent-light); }
+
+  /* ── TOP NAV ── */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--nav-bg);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .navbar-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar-logo {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .navbar-logo span { color: var(--accent); }
+
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .navbar-links a {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    text-transform: uppercase;
+  }
+  .navbar-links a:hover { color: var(--accent); }
+
+  .theme-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 34px; height: 34px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    transition: all 0.2s;
+  }
+  .theme-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── CONTAINER ── */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ── ARTICLE ── */
+  .article {
+    padding-top: 100px;
+    padding-bottom: 80px;
+  }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+  }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--accent); }
+
+  /* ── ARTICLE HEADER ── */
+  .article-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .article-cat {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .article-title {
+    font-family: 'Lora', serif;
+    font-size: 38px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 20px;
+    max-width: 580px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+
+  .meta-sep {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--border);
+    align-self: center;
+  }
+
+  .article-tags {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    background: var(--accent-subtle);
+    padding: 2px 10px;
+    border-radius: 3px;
+  }
+
+  /* ── ARTICLE IMAGE ── */
+  .article-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 48px;
+    background: var(--bg-alt);
+    aspect-ratio: 16/8.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ── ARTICLE BODY ── */
+  .article-body {
+    font-size: 17px;
+    line-height: 1.9;
+    font-weight: 300;
+  }
+
+  .article-body h2 {
+    font-family: 'Lora', serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-top: 56px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .article-body h3 {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 40px;
+    margin-bottom: 14px;
+  }
+
+  .article-body p { margin-bottom: 22px; }
+
+  .article-body code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+
+  .article-body pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 28px;
+    margin-bottom: 26px;
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .article-body pre code {
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--code-text);
+  }
+
+  .code-lang {
+    position: absolute;
+    top: 10px; right: 14px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.5;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .article-body strong { font-weight: 600; }
+
+  /* ── PULL QUOTE ── */
+  .article-body blockquote {
+    border-left: 3px solid var(--accent);
+    padding: 16px 24px;
+    margin: 32px 0;
+    font-style: italic;
+    color: var(--text-muted);
+    background: var(--accent-subtle);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* ── POST NAV ── */
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    gap: 24px;
+  }
+
+  .post-nav-item { flex: 1; }
+
+  .post-nav-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .post-nav-title {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    color: var(--text);
+    transition: color 0.2s;
+  }
+  .post-nav-title:hover { color: var(--accent); }
+
+  .post-nav-item.next { text-align: right; }
+
+  /* ── FOOTER ── */
+  .footer {
+    padding: 32px 0;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .article-title { font-size: 28px; }
+    .article-body h2 { font-size: 22px; }
+    .container { padding: 0 20px; }
+    .navbar-links { gap: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="index.html" class="navbar-logo">Juraj<span>.</span></a>
+    <ul class="navbar-links">
+      <li><a href="index.html">Blog</a></li>
+      <li><a href="#">Kategórie</a></li>
+      <li><a href="#">Projekty</a></li>
+      <li><a href="#">CV</a></li>
+      <li><button class="theme-btn" onclick="toggleTheme()" title="Prepnúť tému">◑</button></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container">
+  <main class="article">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+      <a href="index.html">Domov</a> › <span>Článok</span>
+    </nav>
+
+    <!-- ARTICLE HEADER -->
+    <header class="article-header">
+      <div class="article-cat">Dev</div>
+      <h1 class="article-title">How to create simple backend with Rails</h1>
+      <div class="article-meta">
+        <span>Juraj Maťaše</span>
+        <span class="meta-sep"></span>
+        <span>31. marca 2024</span>
+        <span class="meta-sep"></span>
+        <span>7 min čítania</span>
+      </div>
+      <div class="article-tags">
+        <span class="tag">Rails</span>
+        <span class="tag">Ruby</span>
+        <span class="tag">Backend</span>
+      </div>
+    </header>
+
+    <!-- COVER IMAGE -->
+    <div class="article-image">
+      [ Ruby on Rails logo — rails-logo.webp ]
+    </div>
+
+    <!-- ARTICLE BODY -->
+    <article class="article-body">
+
+      <p>A bigger project from my portfolio is a CMS written in Ruby on Rails, which I've called Blog on Rails for now. But I need a few smaller (and sooner finished) projects. The first one is a simple backend for a todo list application. I'm writing it also in Ruby on Rails, but I'm only writing the backend API part.</p>
+
+      <h2>Creating a rails application and generating basic files</h2>
+
+      <p>Ruby on Rails is a great fullstack framework, but for now I'm building only the API. First step is to create a Rails app. I use this command:</p>
+
+      <pre><span class="code-lang">Shell</span><code>rails new todo_rails_backend --api -d sqlite3</code></pre>
+
+      <p>I'm using <code>--api</code> for generating only backend parts. Since I want to use SQLite for the database, I use the command <code>-d sqlite3</code>.</p>
+
+      <p>Moving to app directory:</p>
+
+      <pre><span class="code-lang">Shell</span><code>cd todo_rails_backend</code></pre>
+
+      <p>Next I have to generate a Task model:</p>
+
+      <pre><span class="code-lang">Shell</span><code>rails generate model Task title:string description:text due_date:date completed:boolean</code></pre>
+
+      <p>This will generate a model, test for the model, and migration. Now I need to generate a controller for Task:</p>
+
+      <pre><span class="code-lang">Shell</span><code>rails generate controller Tasks</code></pre>
+
+      <h2>Implementation of Tasks controller</h2>
+
+      <h3>Create Action</h3>
+
+      <p>Now let's implement a task controller. At the beginning we have an empty database and we need to create records. So let's start with the create action.</p>
+
+      <pre><span class="code-lang">Ruby</span><code>class TasksController &lt; ApplicationController
+  def create
+    @task = Task.new(task_params)
+
+    if @task.save
+      render json: @task, status: :created, location: @task
+    else
+      render json: @task.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def task_params
+      params.require(:task).permit(:title, :description, :due_date, :completed)
+    end
+end</code></pre>
+
+      <p>We create a new instance of the Task model using the parameters received from the request. Parameters are defined in the private method <code>task_params</code>.</p>
+
+      <p>If the task is successfully saved, the backend renders the JSON representation of the created task along with the HTTP status <code>201 Created</code>.</p>
+
+      <p><strong>Last few steps before creation of the first task.</strong> We need to add resources to <code>routes.rb</code>:</p>
+
+      <pre><span class="code-lang">Ruby</span><code>Rails.application.routes.draw do
+  resources :tasks
+end</code></pre>
+
+      <p>Run database migration:</p>
+
+      <pre><span class="code-lang">Shell</span><code>rails db:migrate</code></pre>
+
+    </article>
+
+    <!-- POST NAVIGATION -->
+    <nav class="post-nav">
+      <div class="post-nav-item prev">
+        <div class="post-nav-label">← Predošlý</div>
+        <a href="#" class="post-nav-title">Ahoj Jekyll!</a>
+      </div>
+      <div class="post-nav-item next">
+        <div class="post-nav-label">Nasledujúci →</div>
+        <a href="#" class="post-nav-title">—</a>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="footer">
+    © 2024 Juraj Maťaše · Vytvorené s Jekyll
+  </footer>
+
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+}
+</script>
+</body>
+</html>

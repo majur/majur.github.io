@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="sk" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to create simple backend with Rails — Návrh 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ── THEME VARIABLES ── */
+  :root {
+    --slate: #1C2B3A;
+    --slate-mid: #2E4257;
+    --slate-light: #4A6278;
+    --cream: #F7F3EC;
+    --cream-dark: #EDE7DA;
+    --cream-mid: #D9CFBC;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dark: #A8872E;
+    --gray: #8A9BAA;
+  }
+
+  [data-theme="light"] {
+    --bg: var(--cream);
+    --bg-alt: var(--cream-dark);
+    --bg-card: #fff;
+    --text: var(--slate);
+    --text-muted: #6B7E8A;
+    --border: var(--cream-mid);
+    --sidebar-bg: var(--slate);
+    --sidebar-text: var(--cream);
+    --sidebar-muted: var(--gray);
+    --code-bg: #f0ece4;
+    --code-text: #3C5068;
+  }
+
+  [data-theme="dark"] {
+    --bg: #151B23;
+    --bg-alt: #1B2331;
+    --bg-card: #1E2733;
+    --text: #E4E0D8;
+    --text-muted: #7E8E9E;
+    --border: #2A3545;
+    --sidebar-bg: #0F141A;
+    --sidebar-text: #E4E0D8;
+    --sidebar-muted: #5A6A7A;
+    --code-bg: #1A2230;
+    --code-text: #C8D0D8;
+  }
+
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    display: flex;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  a { color: var(--gold); text-decoration: none; transition: color 0.2s; }
+  a:hover { color: var(--gold-light); }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    width: 260px;
+    background: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 28px;
+    z-index: 100;
+    transition: background 0.3s;
+  }
+
+  .sidebar-avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--slate-mid);
+    margin-bottom: 16px;
+    border: 2px solid rgba(201,168,76,0.3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-family: 'Lora', serif; font-size: 28px;
+  }
+
+  .sidebar-name {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--sidebar-text);
+    margin-bottom: 4px;
+  }
+
+  .sidebar-bio {
+    font-size: 13px;
+    color: var(--sidebar-muted);
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+
+  .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+  .sidebar-nav a {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--sidebar-muted);
+    transition: all 0.2s;
+  }
+  .sidebar-nav a:hover,
+  .sidebar-nav a.active {
+    background: rgba(201,168,76,0.1);
+    color: var(--gold);
+  }
+
+  .sidebar-nav-icon {
+    width: 18px; text-align: center; font-size: 13px;
+  }
+
+  .sidebar-bottom {
+    margin-top: auto;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .sidebar-social {
+    display: flex; gap: 14px;
+  }
+
+  .sidebar-social a {
+    color: var(--sidebar-muted);
+    font-size: 16px;
+    transition: color 0.2s;
+  }
+  .sidebar-social a:hover { color: var(--gold); }
+
+  .theme-toggle {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--gold);
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .theme-toggle:hover { background: rgba(201,168,76,0.2); }
+
+  /* ── MAIN ── */
+  .main {
+    margin-left: 260px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .content {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 40px;
+  }
+
+  /* ── BREADCRUMB ── */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+  }
+  .breadcrumb a { color: var(--text-muted); }
+  .breadcrumb a:hover { color: var(--gold); }
+  .breadcrumb-sep { color: var(--border); }
+
+  /* ── ARTICLE HEADER ── */
+  .article-header {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .article-category {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .article-category::before {
+    content: '';
+    width: 28px; height: 1px;
+    background: var(--gold);
+  }
+
+  .article-title {
+    font-family: 'Lora', serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+  }
+
+  .article-meta-item {
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .article-meta-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--border);
+  }
+
+  .article-tags {
+    display: flex; gap: 8px;
+  }
+
+  .article-tag {
+    background: rgba(201,168,76,0.1);
+    color: var(--gold-dark);
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  [data-theme="dark"] .article-tag { color: var(--gold); }
+
+  /* ── ARTICLE IMAGE ── */
+  .article-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    background: var(--bg-alt);
+    aspect-ratio: 16/8.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  /* ── ARTICLE BODY ── */
+  .article-body {
+    font-size: 16px;
+    line-height: 1.85;
+    font-weight: 300;
+  }
+
+  .article-body h2 {
+    font-family: 'Lora', serif;
+    font-size: 26px;
+    font-weight: 400;
+    margin-top: 48px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .article-body h3 {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+
+  .article-body p {
+    margin-bottom: 20px;
+  }
+
+  .article-body code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.88em;
+  }
+
+  .article-body pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    position: relative;
+  }
+
+  .article-body pre code {
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--code-text);
+  }
+
+  .code-label {
+    position: absolute;
+    top: 8px; right: 12px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
+  .article-body strong { font-weight: 600; }
+
+  /* ── TOC ── */
+  .toc {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+
+  .toc-title {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .toc-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .toc-list a {
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toc-list a::before {
+    content: '';
+    width: 16px; height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .toc-list a:hover { color: var(--gold); }
+
+  .toc-list .toc-sub {
+    padding-left: 24px;
+  }
+
+  /* ── POST NAV ── */
+  .post-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    gap: 24px;
+  }
+
+  .post-nav-item {
+    flex: 1;
+  }
+
+  .post-nav-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .post-nav-title {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    color: var(--text);
+    transition: color 0.2s;
+  }
+  .post-nav-title:hover { color: var(--gold); }
+
+  .post-nav-item.next { text-align: right; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top: 60px;
+    padding: 24px 0;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .sidebar {
+      position: relative;
+      width: 100%;
+      flex-direction: row;
+      flex-wrap: wrap;
+      padding: 20px 24px;
+      align-items: center;
+      gap: 16px;
+    }
+    .sidebar-avatar { width: 48px; height: 48px; font-size: 18px; margin-bottom: 0; }
+    .sidebar-name { margin-bottom: 0; }
+    .sidebar-bio { margin-bottom: 0; }
+    .sidebar-nav { flex-direction: row; flex-wrap: wrap; }
+    .sidebar-bottom { margin-top: 0; flex-direction: row; align-items: center; }
+    .main { margin-left: 0; }
+    body { flex-direction: column; }
+    .content { padding: 32px 20px; }
+    .article-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-avatar">JM</div>
+  <div class="sidebar-name">Juraj Maťaše</div>
+  <div class="sidebar-bio">Píšem o technológiách, slobode a&nbsp;behu</div>
+
+  <ul class="sidebar-nav">
+    <li><a href="index.html"><span class="sidebar-nav-icon">⌂</span> Domov</a></li>
+    <li><a href="#"><span class="sidebar-nav-icon">▦</span> Kategórie</a></li>
+    <li><a href="#"><span class="sidebar-nav-icon">⊟</span> Štítky</a></li>
+    <li><a href="#"><span class="sidebar-nav-icon">◈</span> Projekty</a></li>
+    <li><a href="#"><span class="sidebar-nav-icon">⊡</span> CV</a></li>
+  </ul>
+
+  <div class="sidebar-bottom">
+    <div class="sidebar-social">
+      <a href="https://github.com/majur" title="GitHub">GH</a>
+      <a href="https://ruby.social/@juraj" title="Mastodon">M</a>
+      <a href="#" title="RSS">RSS</a>
+    </div>
+    <button class="theme-toggle" onclick="toggleTheme()">☀ / ☾</button>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+  <div class="content">
+
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb">
+      <a href="index.html">Domov</a>
+      <span class="breadcrumb-sep">›</span>
+      <span>How to create simple backend with Rails</span>
+    </nav>
+
+    <!-- ARTICLE HEADER -->
+    <header class="article-header">
+      <div class="article-category">Dev</div>
+      <h1 class="article-title">How to create simple backend with Rails</h1>
+      <div class="article-meta">
+        <span class="article-meta-item">Juraj Maťaše</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-item">31. marca 2024</span>
+        <span class="article-meta-dot"></span>
+        <span class="article-meta-item">7 min čítania</span>
+      </div>
+      <div class="article-tags" style="margin-top: 16px;">
+        <span class="article-tag">Rails</span>
+        <span class="article-tag">Ruby</span>
+        <span class="article-tag">Backend</span>
+      </div>
+    </header>
+
+    <!-- COVER IMAGE -->
+    <div class="article-image">
+      [ Ruby on Rails logo — rails-logo.webp ]
+    </div>
+
+    <!-- TABLE OF CONTENTS -->
+    <nav class="toc">
+      <div class="toc-title">Obsah</div>
+      <ul class="toc-list">
+        <li><a href="#creating">Creating a rails application and generating basic files</a></li>
+        <li><a href="#implementation">Implementation of Tasks controller</a></li>
+        <li class="toc-sub"><a href="#create-action">Create Action</a></li>
+      </ul>
+    </nav>
+
+    <!-- ARTICLE BODY -->
+    <article class="article-body">
+
+      <p>A bigger project from my portfolio is a CMS written in Ruby on Rails, which I've called Blog on Rails for now. But I need a few smaller (and sooner finished) projects. The first one is a simple backend for a todo list application. I'm writing it also in Ruby on Rails, but I'm only writing the backend API part.</p>
+
+      <h2 id="creating">Creating a rails application and generating basic files</h2>
+
+      <p>Ruby on Rails is a great fullstack framework, but for now I'm building only the API. First step is to create a Rails app. I use this command:</p>
+
+      <pre><span class="code-label">Shell</span><code>rails new todo_rails_backend --api -d sqlite3</code></pre>
+
+      <p>I'm using <code>--api</code> for generating only backend parts. Since I want to use SQLite for the database, I use the command <code>-d sqlite3</code>.</p>
+
+      <p>Moving to app directory:</p>
+
+      <pre><span class="code-label">Shell</span><code>cd todo_rails_backend</code></pre>
+
+      <p>Next I have to generate a Task model:</p>
+
+      <pre><span class="code-label">Shell</span><code>rails generate model Task title:string description:text due_date:date completed:boolean</code></pre>
+
+      <p>This will generate a model, test for the model, and migration. Now I need to generate a controller for Task:</p>
+
+      <pre><span class="code-label">Shell</span><code>rails generate controller Tasks</code></pre>
+
+      <h2 id="implementation">Implementation of Tasks controller</h2>
+
+      <h3 id="create-action">Create Action</h3>
+
+      <p>Now let's implement a task controller. At the beginning we have an empty database and we need to create records. So let's start with the create action.</p>
+
+      <pre><span class="code-label">app/controllers/tasks_controller.rb</span><code>class TasksController &lt; ApplicationController
+  def create
+    @task = Task.new(task_params)
+
+    if @task.save
+      render json: @task, status: :created, location: @task
+    else
+      render json: @task.errors, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def task_params
+      params.require(:task).permit(:title, :description, :due_date, :completed)
+    end
+end</code></pre>
+
+      <p>We create a new instance of the Task model using the parameters received from the request. Parameters are defined in the private method <code>task_params</code>. This is done by calling <code>Task.new(task_params)</code>.</p>
+
+      <p>We attempt to save the newly created task to the database using <code>@task.save</code>.</p>
+
+      <p>If the task is successfully saved, the backend renders the JSON representation of the created task along with the HTTP status <code>201 Created</code>. It also includes the <code>Location</code> header pointing to the newly created task's URL.</p>
+
+      <p><strong>Last few steps before creation of the first task.</strong> We need to add resources to <code>routes.rb</code>:</p>
+
+      <pre><span class="code-label">routes.rb</span><code>Rails.application.routes.draw do
+  resources :tasks
+end</code></pre>
+
+      <p>Run database migration:</p>
+
+      <pre><span class="code-label">Shell</span><code>rails db:migrate</code></pre>
+
+    </article>
+
+    <!-- POST NAVIGATION -->
+    <nav class="post-nav">
+      <div class="post-nav-item prev">
+        <div class="post-nav-label">← Predošlý</div>
+        <a href="#" class="post-nav-title">Ahoj Jekyll!</a>
+      </div>
+      <div class="post-nav-item next">
+        <div class="post-nav-label">Nasledujúci →</div>
+        <a href="#" class="post-nav-title">—</a>
+      </div>
+    </nav>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      © 2024 Juraj Maťaše · Vytvorené s Jekyll
+    </footer>
+
+  </div>
+</div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  html.setAttribute('data-theme', current === 'light' ? 'dark' : 'light');
+}
+</script>
+</body>
+</html>
