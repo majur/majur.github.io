@@ -117,7 +117,7 @@ def head(title, depth=0, article=False):
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>{title} — Juraj Maťaše</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{prefix}css/style.css">
@@ -161,22 +161,94 @@ def nav(active, depth=0):
         cls = ' class="active"' if key == active else ""
         items_parts.append(f'<li><a href="{href}"{cls}>{label}</a></li>')
     items = "".join(items_parts)
-    return f"""<nav class="navbar" id="navbar">
+    return f"""<header class="site-chrome site-header">
+<nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="{prefix}index.html" class="nav-logo">
       <span class="nav-logo-mark">JM</span>
-      Juraj Maťaše
+      <span class="nav-logo-text">Juraj Maťaše</span>
     </a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Otvoriť menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Zavrieť menu">×</button>
+      </li>
       {items}
-      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+      <li class="nav-theme-item"><button type="button" class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
     </ul>
   </div>
-</nav>"""
+  <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Zavrieť menu" aria-hidden="true" tabindex="-1"></button>
+</nav>
+</header>"""
+
+
+def page_main_open():
+    return "<main class=\"page-main\">"
+
+
+def page_main_close():
+    return "</main>"
+
+
+def page_top(eyebrow, title, subtitle=""):
+    subtitle_html = f'<p class="page-subtitle">{subtitle}</p>' if subtitle else ""
+    return f"""<section class="page-header vt-top">
+  <div class="page-header-inner">
+    <div class="vt-top-core">
+      <div class="hero-eyebrow">{eyebrow}</div>
+      <h1 class="page-title">{title}</h1>
+      {subtitle_html}
+    </div>
+  </div>
+</section>"""
+
+
+def hero_top():
+    return """<section class="hero page-header vt-top">
+  <div class="page-header-inner hero-inner">
+    <div class="hero-avatar" aria-hidden="true">JM</div>
+    <div class="vt-top-core hero-content">
+      <div class="hero-eyebrow">Osobný blog</div>
+      <h1 class="page-title hero-title">Technológie, <em>sloboda</em> a&nbsp;beh</h1>
+      <p class="page-subtitle hero-subtitle">Píšem o programovaní, open source, slobode na internete a občas aj o behu.</p>
+      <div class="page-top-extra hero-meta">
+        <span class="hero-badge">QA inžinier</span>
+        <span class="hero-badge">Bratislava</span>
+        <span class="hero-badge">Ruby on Rails</span>
+      </div>
+    </div>
+  </div>
+</section>"""
+
+
+def article_top(post, depth=1):
+    prefix = "../" * depth
+    tags = "".join(
+        f'<a href="{prefix}stitok-{tag_key(t)}.html" class="mini-tag">{t}</a> '
+        for t in post["tags"]
+    )
+    cats = post["categories"][0]
+    meta = f"Juraj Maťaše · {post['date']} · {post['read_time']} čítania"
+    return f"""<header class="article-header page-header vt-top">
+  <div class="page-header-inner article-header-inner">
+    <div class="vt-top-core">
+      <div class="hero-eyebrow"><nav class="breadcrumb" aria-label="Navigácia"><a href="{prefix}index.html">Domov</a> › <span>Článok</span></nav></div>
+      <p class="page-top-lead"><span class="article-cat-badge">{cats}</span></p>
+      <h1 class="page-title article-title">{post['title']}</h1>
+      <p class="page-subtitle article-meta-line">{meta}</p>
+      <div class="page-top-extra article-tags">{tags}</div>
+    </div>
+  </div>
+</header>"""
 
 
 def footer(depth=0):
-    return """<footer class="footer">
+    return """<footer class="site-chrome footer">
   <div class="footer-inner">
     <div class="footer-logo">Juraj Maťaše<span>.</span></div>
     <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>
@@ -229,26 +301,13 @@ def generate_index():
     )
 
     html = f"""{head("Blog")}
-<body>
+<body class="site-shell">
 {nav("blog")}
+{page_main_open()}
 
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-avatar" aria-hidden="true">JM</div>
-    <div class="hero-content">
-      <div class="hero-eyebrow">Osobný blog</div>
-      <h1 class="hero-title">Technológie, <em>sloboda</em> a&nbsp;beh</h1>
-      <p class="hero-subtitle">Píšem o programovaní, open source, slobode na internete a občas aj o behu.</p>
-      <div class="hero-meta">
-        <span class="hero-badge">QA inžinier</span>
-        <span class="hero-badge">Bratislava</span>
-        <span class="hero-badge">Ruby on Rails</span>
-      </div>
-    </div>
-  </div>
-</section>
+{hero_top()}
 
-<div class="container">
+<div class="container vt-body">
   <section class="featured">
     <div class="section-label">Najnovší článok</div>
     <article class="featured-card">
@@ -281,6 +340,7 @@ def generate_index():
   </section>
 </div>
 
+{page_main_close()}
 {footer()}
 </body>
 </html>
@@ -298,23 +358,19 @@ def generate_kategorie():
       </a>\n"""
 
     html = f"""{head("Kategórie")}
-<body>
+<body class="site-shell">
 {nav("kategorie")}
+{page_main_open()}
 
-<section class="page-header">
-  <div class="page-header-inner">
-    <div class="hero-eyebrow">Archív</div>
-    <h1 class="page-title">Kategórie</h1>
-    <p class="page-subtitle">Články zoradené podľa témy.</p>
-  </div>
-</section>
+{page_top("Archív", "Kategórie", "Články zoradené podľa témy.")}
 
-<div class="page-content">
+<div class="page-content vt-body">
   <div class="category-grid">
     {cards}
   </div>
 </div>
 
+{page_main_close()}
 {footer()}
 </body>
 </html>
@@ -325,22 +381,19 @@ def generate_kategorie():
 def generate_category_pages():
     for key, cat in CATEGORIES.items():
         posts = posts_for_category(cat["name"])
+        count = f"{len(posts)} {'článok' if len(posts) == 1 else 'články' if len(posts) < 5 else 'článkov'}"
         html = f"""{head(cat['name'])}
-<body>
+<body class="site-shell">
 {nav("kategorie")}
+{page_main_open()}
 
-<section class="page-header">
-  <div class="page-header-inner">
-    <div class="hero-eyebrow"><a href="kategorie.html">Kategórie</a></div>
-    <h1 class="page-title">{cat['name']}</h1>
-    <p class="page-subtitle">{len(posts)} {'článok' if len(posts) == 1 else 'články' if len(posts) < 5 else 'článkov'}</p>
-  </div>
-</section>
+{page_top('<a href="kategorie.html">Kategórie</a>', cat['name'], count)}
 
-<div class="page-content">
+<div class="page-content vt-body">
   {archive_list(posts)}
 </div>
 
+{page_main_close()}
 {footer()}
 </body>
 </html>
@@ -353,23 +406,19 @@ def generate_stitky():
         f'<a href="{t["slug"]}" class="tag-chip">{t["name"]}</a>' for t in TAGS.values()
     )
     html = f"""{head("Štítky")}
-<body>
+<body class="site-shell">
 {nav("stitky")}
+{page_main_open()}
 
-<section class="page-header">
-  <div class="page-header-inner">
-    <div class="hero-eyebrow">Archív</div>
-    <h1 class="page-title">Štítky</h1>
-    <p class="page-subtitle">Preskúmajte články podľa kľúčových slov.</p>
-  </div>
-</section>
+{page_top("Archív", "Štítky", "Preskúmajte články podľa kľúčových slov.")}
 
-<div class="page-content">
+<div class="page-content vt-body">
   <div class="tags-strip" style="border-top:none;padding-top:0;">
     {chips}
   </div>
 </div>
 
+{page_main_close()}
 {footer()}
 </body>
 </html>
@@ -380,22 +429,19 @@ def generate_stitky():
 def generate_tag_pages():
     for key, tag in TAGS.items():
         posts = posts_for_tag(tag["name"])
+        count = f"{len(posts)} {'článok' if len(posts) == 1 else 'články' if len(posts) < 5 else 'článkov'}"
         html = f"""{head(tag['name'])}
-<body>
+<body class="site-shell">
 {nav("stitky")}
+{page_main_open()}
 
-<section class="page-header">
-  <div class="page-header-inner">
-    <div class="hero-eyebrow"><a href="stitky.html">Štítky</a></div>
-    <h1 class="page-title">{tag['name']}</h1>
-    <p class="page-subtitle">{len(posts)} {'článok' if len(posts) == 1 else 'články' if len(posts) < 5 else 'článkov'}</p>
-  </div>
-</section>
+{page_top('<a href="stitky.html">Štítky</a>', tag['name'], count)}
 
-<div class="page-content">
+<div class="page-content vt-body">
   {archive_list(posts) if posts else '<p style="color:var(--text-muted)">Zatiaľ žiadne články.</p>'}
 </div>
 
+{page_main_close()}
 {footer()}
 </body>
 </html>
@@ -405,18 +451,13 @@ def generate_tag_pages():
 
 def generate_projekty():
     html = f"""{head("Projekty")}
-<body>
+<body class="site-shell">
 {nav("projekty")}
+{page_main_open()}
 
-<section class="page-header">
-  <div class="page-header-inner">
-    <div class="hero-eyebrow">Portfólio</div>
-    <h1 class="page-title">Moje projekty</h1>
-    <p class="page-subtitle">Side projekty v Ruby on Rails a okolí.</p>
-  </div>
-</section>
+{page_top("Portfólio", "Moje projekty", "Side projekty v Ruby on Rails a okolí.")}
 
-<div class="page-content">
+<div class="page-content vt-body">
   <div class="projects-grid">
     <article class="project-card">
       <div class="project-icon">⚙</div>
@@ -439,6 +480,7 @@ def generate_projekty():
   </div>
 </div>
 
+{page_main_close()}
 {footer()}
 </body>
 </html>
@@ -448,17 +490,13 @@ def generate_projekty():
 
 def generate_cv():
     html = f"""{head("CV")}
-<body>
+<body class="site-shell">
 {nav("cv")}
+{page_main_open()}
 
-<section class="page-header">
-  <div class="page-header-inner">
-    <div class="hero-eyebrow">Profil</div>
-    <h1 class="page-title">Životopis</h1>
-  </div>
-</section>
+{page_top("Profil", "Životopis")}
 
-<div class="page-content">
+<div class="page-content vt-body">
   <div class="cv-layout">
     <aside class="cv-sidebar">
       <div class="cv-avatar" aria-hidden="true">JM</div>
@@ -510,6 +548,7 @@ def generate_cv():
 
       <section class="cv-section">
         <h2>Skills</h2>
+        <div class="table-scroll">
         <table class="cv-table">
           <thead><tr><th>Hard skills</th><th>Úroveň</th><th>Skúsenosti</th></tr></thead>
           <tbody>
@@ -523,10 +562,12 @@ def generate_cv():
             <tr><td>Git a GitHub</td><td>⭐️⭐️⭐️</td><td>4 roky</td></tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <section class="cv-section">
         <h2>Vzdelanie a kurzy</h2>
+        <div class="table-scroll">
         <table class="cv-table">
           <thead><tr><th>Kurz / škola</th><th>Rok</th><th>Poznámka</th></tr></thead>
           <tbody>
@@ -537,11 +578,13 @@ def generate_cv():
             <tr><td>Cypress</td><td>2021</td><td>Test automation</td></tr>
           </tbody>
         </table>
+        </div>
       </section>
     </div>
   </div>
 </div>
 
+{page_main_close()}
 {footer()}
 </body>
 </html>
@@ -684,12 +727,9 @@ def generate_articles():
         prev_p = POSTS[idx + 1] if idx + 1 < len(POSTS) else None
         next_p = POSTS[idx - 1] if idx > 0 else None
         body = load_article_body(post["slug"])
-        tags = "".join(f'<a href="../stitok-{tag_key(t)}.html" class="mini-tag">{t}</a> ' for t in post["tags"])
-        cats = post["categories"][0]
-
         prev_nav = ""
         if prev_p:
-            prev_nav = f"""<a href="{prev_p['slug']}.html" class="post-nav-card prev">
+            prev_nav = f"""<a href="{prev_p['slug']}.html" class="post-nav-card prev" data-vt-direction="prev">
         <div class="post-nav-label">← Predošlý článok</div>
         <div class="post-nav-title">{prev_p['title']}</div>
       </a>"""
@@ -698,7 +738,7 @@ def generate_articles():
 
         next_nav = ""
         if next_p:
-            next_nav = f"""<a href="{next_p['slug']}.html" class="post-nav-card next">
+            next_nav = f"""<a href="{next_p['slug']}.html" class="post-nav-card next" data-vt-direction="next">
         <div class="post-nav-label">Nasledujúci článok →</div>
         <div class="post-nav-title">{next_p['title']}</div>
       </a>"""
@@ -706,37 +746,23 @@ def generate_articles():
             next_nav = '<div></div>'
 
         html = f"""{head(post['title'], depth=1, article=True)}
-<body>
+<body class="site-shell page-article">
 {nav("blog", depth=1)}
+{page_main_open()}
 
-<header class="article-header">
-  <div class="article-header-inner">
-    <nav class="breadcrumb">
-      <a href="../index.html">Domov</a> › <span>Článok</span>
-    </nav>
-    <span class="article-cat-badge">{cats}</span>
-    <h1 class="article-title">{post['title']}</h1>
-    <div class="article-meta">
-      <span>Juraj Maťaše</span>
-      <span class="featured-meta-sep"></span>
-      <span>{post['date']}</span>
-      <span class="featured-meta-sep"></span>
-      <span>{post['read_time']} čítania</span>
-    </div>
-    <div class="article-tags">{tags}</div>
-  </div>
-</header>
+{article_top(post)}
 
 <div class="article-container">
-  <article class="article-body">
+  <article class="article-body vt-body">
     {body}
   </article>
-  <nav class="post-nav">
+  <nav class="post-nav vt-article-nav" aria-label="Navigácia medzi článkami">
     {prev_nav}
     {next_nav}
   </nav>
 </div>
 
+{page_main_close()}
 {footer()}
 {PRISM_SCRIPTS}
 </body>

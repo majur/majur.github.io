@@ -2,46 +2,53 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>How to create simple backend with rails — Juraj Maťaše</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <script src="../js/theme.js"></script>
 </head>
-<body>
+<body class="site-shell page-article">
+<header class="site-chrome site-header">
 <nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="../index.html" class="nav-logo">
       <span class="nav-logo-mark">JM</span>
-      Juraj Maťaše
+      <span class="nav-logo-text">Juraj Maťaše</span>
     </a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Otvoriť menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Zavrieť menu">×</button>
+      </li>
       <li><a href="../index.html" class="active">Blog</a></li><li><a href="../kategorie.html">Kategórie</a></li><li><a href="../stitky.html">Štítky</a></li><li><a href="../projekty.html">Projekty</a></li><li><a href="../cv.html">CV</a></li>
-      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+      <li class="nav-theme-item"><button type="button" class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
     </ul>
   </div>
+  <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Zavrieť menu" aria-hidden="true" tabindex="-1"></button>
 </nav>
+</header>
+<main class="page-main">
 
-<header class="article-header">
-  <div class="article-header-inner">
-    <nav class="breadcrumb">
-      <a href="../index.html">Domov</a> › <span>Článok</span>
-    </nav>
-    <span class="article-cat-badge">Dev</span>
-    <h1 class="article-title">How to create simple backend with rails</h1>
-    <div class="article-meta">
-      <span>Juraj Maťaše</span>
-      <span class="featured-meta-sep"></span>
-      <span>31. mar 2024</span>
-      <span class="featured-meta-sep"></span>
-      <span>7 min čítania</span>
+<header class="article-header page-header vt-top">
+  <div class="page-header-inner article-header-inner">
+    <div class="vt-top-core">
+      <div class="hero-eyebrow"><nav class="breadcrumb" aria-label="Navigácia"><a href="../index.html">Domov</a> › <span>Článok</span></nav></div>
+      <p class="page-top-lead"><span class="article-cat-badge">Dev</span></p>
+      <h1 class="page-title article-title">How to create simple backend with rails</h1>
+      <p class="page-subtitle article-meta-line">Juraj Maťaše · 31. mar 2024 · 7 min čítania</p>
+      <div class="page-top-extra article-tags"><a href="../stitok-backend.html" class="mini-tag">Backend</a> <a href="../stitok-ruby.html" class="mini-tag">Ruby</a> <a href="../stitok-rails.html" class="mini-tag">Rails</a> </div>
     </div>
-    <div class="article-tags"><a href="../stitok-backend.html" class="mini-tag">Backend</a> <a href="../stitok-ruby.html" class="mini-tag">Ruby</a> <a href="../stitok-rails.html" class="mini-tag">Rails</a> </div>
   </div>
 </header>
 
 <div class="article-container">
-  <article class="article-body">
+  <article class="article-body vt-body">
     <p>A bigger project from my portfolio is a CMS written in Ruby on Rails, which I've called Blog on Rails for now. But I need a few smaller (and sooner finished) projects. The first one is a simple backend for a todo list application. I'm writing it also in Ruby on Rails, but I'm only writing the backend API part.</p>
     <h2>Creating a rails application and generating basic files</h2>
     <p>Ruby on Rails is greate fullstack framework, but for now I building only API. First step is to create Rails app. I use this command:</p>
@@ -179,8 +186,8 @@ end</code></pre>
     <p>By breaking down the controller into smaller parts and explaining each action separately, we aimed to provide a clear understanding of how to handle task management within a Rails application. From retrieving tasks to creating, updating, and deleting them, these actions form the foundation of a robust task management system.</p>
     <p>Repository with this API backend is <a href="https://github.com/majur/todo_rails_backend">here</a>. You can find my CV <a href="../cv.html">here</a>, and if you want to arrange a call with me please send me an email to juraj@matase.sk</p>
   </article>
-  <nav class="post-nav">
-    <a href="ahoj-jekyll.html" class="post-nav-card prev">
+  <nav class="post-nav vt-article-nav" aria-label="Navigácia medzi článkami">
+    <a href="ahoj-jekyll.html" class="post-nav-card prev" data-vt-direction="prev">
         <div class="post-nav-label">← Predošlý článok</div>
         <div class="post-nav-title">Ahoj Jekyll!</div>
       </a>
@@ -188,7 +195,8 @@ end</code></pre>
   </nav>
 </div>
 
-<footer class="footer">
+</main>
+<footer class="site-chrome footer">
   <div class="footer-inner">
     <div class="footer-logo">Juraj Maťaše<span>.</span></div>
     <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>

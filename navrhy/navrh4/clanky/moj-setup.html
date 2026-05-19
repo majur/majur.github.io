@@ -2,46 +2,53 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Môj setup — Juraj Maťaše</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <script src="../js/theme.js"></script>
 </head>
-<body>
+<body class="site-shell page-article">
+<header class="site-chrome site-header">
 <nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="../index.html" class="nav-logo">
       <span class="nav-logo-mark">JM</span>
-      Juraj Maťaše
+      <span class="nav-logo-text">Juraj Maťaše</span>
     </a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Otvoriť menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Zavrieť menu">×</button>
+      </li>
       <li><a href="../index.html" class="active">Blog</a></li><li><a href="../kategorie.html">Kategórie</a></li><li><a href="../stitky.html">Štítky</a></li><li><a href="../projekty.html">Projekty</a></li><li><a href="../cv.html">CV</a></li>
-      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+      <li class="nav-theme-item"><button type="button" class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
     </ul>
   </div>
+  <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Zavrieť menu" aria-hidden="true" tabindex="-1"></button>
 </nav>
+</header>
+<main class="page-main">
 
-<header class="article-header">
-  <div class="article-header-inner">
-    <nav class="breadcrumb">
-      <a href="../index.html">Domov</a> › <span>Článok</span>
-    </nav>
-    <span class="article-cat-badge">Dev</span>
-    <h1 class="article-title">Môj setup</h1>
-    <div class="article-meta">
-      <span>Juraj Maťaše</span>
-      <span class="featured-meta-sep"></span>
-      <span>6. okt 2021</span>
-      <span class="featured-meta-sep"></span>
-      <span>4 min čítania</span>
+<header class="article-header page-header vt-top">
+  <div class="page-header-inner article-header-inner">
+    <div class="vt-top-core">
+      <div class="hero-eyebrow"><nav class="breadcrumb" aria-label="Navigácia"><a href="../index.html">Domov</a> › <span>Článok</span></nav></div>
+      <p class="page-top-lead"><span class="article-cat-badge">Dev</span></p>
+      <h1 class="page-title article-title">Môj setup</h1>
+      <p class="page-subtitle article-meta-line">Juraj Maťaše · 6. okt 2021 · 4 min čítania</p>
+      <div class="page-top-extra article-tags"></div>
     </div>
-    <div class="article-tags"></div>
   </div>
 </header>
 
 <div class="article-container">
-  <article class="article-body">
+  <article class="article-body vt-body">
     <p>Pre každého IT profesionála je jeho počítač (a SW v ňom) jeho najdoležitejšia zbraň. Musí si ju udržiavať ostrú a pripravenú na boj.</p>
     <h2>Ideálny setup</h2>
     <p>Zabudnite na ideálny setup. Nepotrebujete ho. Musíte sa však zamyslieť nad tým, čo je pre vás ideálne. Nemusíte míňať tisíce dolárov na špičkový hardvér. V podstate je v tejto oblasti oveľa dôležitejší softvér.</p>
@@ -78,19 +85,20 @@
     <p><em>[Desktop View]</em></p>
     <p>_Keychrone K6_</p>
   </article>
-  <nav class="post-nav">
-    <a href="preco-hodnota-bitcoinu-stupa.html" class="post-nav-card prev">
+  <nav class="post-nav vt-article-nav" aria-label="Navigácia medzi článkami">
+    <a href="preco-hodnota-bitcoinu-stupa.html" class="post-nav-card prev" data-vt-direction="prev">
         <div class="post-nav-label">← Predošlý článok</div>
         <div class="post-nav-title">Prečo hodnota Bitcoinu stúpa?</div>
       </a>
-    <a href="socialna-siet-buducnosti-ma-23-rokov.html" class="post-nav-card next">
+    <a href="socialna-siet-buducnosti-ma-23-rokov.html" class="post-nav-card next" data-vt-direction="next">
         <div class="post-nav-label">Nasledujúci článok →</div>
         <div class="post-nav-title">Sociálna sieť budúcnosti má 23 rokov</div>
       </a>
   </nav>
 </div>
 
-<footer class="footer">
+</main>
+<footer class="site-chrome footer">
   <div class="footer-inner">
     <div class="footer-logo">Juraj Maťaše<span>.</span></div>
     <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>

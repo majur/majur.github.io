@@ -2,46 +2,53 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Prečo hodnota Bitcoinu stúpa? — Juraj Maťaše</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <script src="../js/theme.js"></script>
 </head>
-<body>
+<body class="site-shell page-article">
+<header class="site-chrome site-header">
 <nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="../index.html" class="nav-logo">
       <span class="nav-logo-mark">JM</span>
-      Juraj Maťaše
+      <span class="nav-logo-text">Juraj Maťaše</span>
     </a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Otvoriť menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Zavrieť menu">×</button>
+      </li>
       <li><a href="../index.html" class="active">Blog</a></li><li><a href="../kategorie.html">Kategórie</a></li><li><a href="../stitky.html">Štítky</a></li><li><a href="../projekty.html">Projekty</a></li><li><a href="../cv.html">CV</a></li>
-      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+      <li class="nav-theme-item"><button type="button" class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
     </ul>
   </div>
+  <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Zavrieť menu" aria-hidden="true" tabindex="-1"></button>
 </nav>
+</header>
+<main class="page-main">
 
-<header class="article-header">
-  <div class="article-header-inner">
-    <nav class="breadcrumb">
-      <a href="../index.html">Domov</a> › <span>Článok</span>
-    </nav>
-    <span class="article-cat-badge">Sloboda</span>
-    <h1 class="article-title">Prečo hodnota Bitcoinu stúpa?</h1>
-    <div class="article-meta">
-      <span>Juraj Maťaše</span>
-      <span class="featured-meta-sep"></span>
-      <span>26. feb 2021</span>
-      <span class="featured-meta-sep"></span>
-      <span>8 min čítania</span>
+<header class="article-header page-header vt-top">
+  <div class="page-header-inner article-header-inner">
+    <div class="vt-top-core">
+      <div class="hero-eyebrow"><nav class="breadcrumb" aria-label="Navigácia"><a href="../index.html">Domov</a> › <span>Článok</span></nav></div>
+      <p class="page-top-lead"><span class="article-cat-badge">Sloboda</span></p>
+      <h1 class="page-title article-title">Prečo hodnota Bitcoinu stúpa?</h1>
+      <p class="page-subtitle article-meta-line">Juraj Maťaše · 26. feb 2021 · 8 min čítania</p>
+      <div class="page-top-extra article-tags"></div>
     </div>
-    <div class="article-tags"></div>
   </div>
 </header>
 
 <div class="article-container">
-  <article class="article-body">
+  <article class="article-body vt-body">
     <p>Bitcoin je fenomén ktorý vyvoláva veľa otázok. Prvý krát som o Bitcoine počul okolo roku 2012 (2013?). Jeho hodnota sa počítala v desiatkach eur a bol som fascinovaný z peňazí ktoré dokážu fungovať ako open source projekt bez kontroly štátu a bez žiadnej autority. Bitcoin som vtedy nekúpil ani nezačal ťažiť. Dnes by som si za to kupil dom.</p>
     <p>Takže v Bitcoinovej komunite sa pohybujem dlhšie a vnímam rôzne nálady. Cítiť v nej jeden brutálny trend. Od dôb kedy si linuxoví geekovia posielali elektronické peniaze cez príkazový riadok, cez adopciu prvých "normálnejších" používateľov až po dnešnú situáciu kedy Bitcoin kupujú ľudia ktorí vôbec netušia čo to je ale chcú len zbohatnúť.</p>
     <p>Aby bolo jasné: chcieť zbohatnúť je normálna vec. Problém je keď sa niekto snaží zbohatnúť na niečom čo nevie ako funguje. A vtedy veľmi ľahko namiesto bohatnutia krachuje. Preto chcem zhrnúť v jednoduchosti ako je to s tým Bitcoinom.</p>
@@ -68,19 +75,20 @@
     <blockquote><p>- Naučte sa ako Bitcoin funguje! Toto je asi najdôležitejšia rada akú Vám môžem dať. Sloboda má aj svoje negatíva, a tým je to, že preberáte za svoje rozhodnutia zodpovednosť. Ak o svoje Bitcoiny prídete, tak sa nedá napísať na "podporu" s prosbou o pomoc. Bitcoin totiž nie je inštitúcia, a teda nemá žiadnu "podporu".</p></blockquote>
     <p>Ak máte nejaké otázky, kľudne sa ma pýtajte na Facebooku, Twitteri alebo pošlite mail na juraj@matase.sk. Najlepšie je ale samovzdelávanie. Na internete je všetko čo potrebujete, len to chce drahocenný čas.</p>
   </article>
-  <nav class="post-nav">
-    <a href="trumpov-twitter-a-sloboda-slova.html" class="post-nav-card prev">
+  <nav class="post-nav vt-article-nav" aria-label="Navigácia medzi článkami">
+    <a href="trumpov-twitter-a-sloboda-slova.html" class="post-nav-card prev" data-vt-direction="prev">
         <div class="post-nav-label">← Predošlý článok</div>
         <div class="post-nav-title">Trumpov twitter a sloboda slova</div>
       </a>
-    <a href="moj-setup.html" class="post-nav-card next">
+    <a href="moj-setup.html" class="post-nav-card next" data-vt-direction="next">
         <div class="post-nav-label">Nasledujúci článok →</div>
         <div class="post-nav-title">Môj setup</div>
       </a>
   </nav>
 </div>
 
-<footer class="footer">
+</main>
+<footer class="site-chrome footer">
   <div class="footer-inner">
     <div class="footer-logo">Juraj Maťaše<span>.</span></div>
     <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>

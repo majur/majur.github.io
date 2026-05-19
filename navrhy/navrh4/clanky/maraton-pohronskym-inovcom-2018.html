@@ -2,46 +2,53 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Maratón Pohronským Inovcom 2018 — Juraj Maťaše</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/style.css">
 <script src="../js/theme.js"></script>
 </head>
-<body>
+<body class="site-shell page-article">
+<header class="site-chrome site-header">
 <nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="../index.html" class="nav-logo">
       <span class="nav-logo-mark">JM</span>
-      Juraj Maťaše
+      <span class="nav-logo-text">Juraj Maťaše</span>
     </a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Otvoriť menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Zavrieť menu">×</button>
+      </li>
       <li><a href="../index.html" class="active">Blog</a></li><li><a href="../kategorie.html">Kategórie</a></li><li><a href="../stitky.html">Štítky</a></li><li><a href="../projekty.html">Projekty</a></li><li><a href="../cv.html">CV</a></li>
-      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+      <li class="nav-theme-item"><button type="button" class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
     </ul>
   </div>
+  <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Zavrieť menu" aria-hidden="true" tabindex="-1"></button>
 </nav>
+</header>
+<main class="page-main">
 
-<header class="article-header">
-  <div class="article-header-inner">
-    <nav class="breadcrumb">
-      <a href="../index.html">Domov</a> › <span>Článok</span>
-    </nav>
-    <span class="article-cat-badge">Beh</span>
-    <h1 class="article-title">Maratón Pohronským Inovcom 2018</h1>
-    <div class="article-meta">
-      <span>Juraj Maťaše</span>
-      <span class="featured-meta-sep"></span>
-      <span>9. mar 2018</span>
-      <span class="featured-meta-sep"></span>
-      <span>10 min čítania</span>
+<header class="article-header page-header vt-top">
+  <div class="page-header-inner article-header-inner">
+    <div class="vt-top-core">
+      <div class="hero-eyebrow"><nav class="breadcrumb" aria-label="Navigácia"><a href="../index.html">Domov</a> › <span>Článok</span></nav></div>
+      <p class="page-top-lead"><span class="article-cat-badge">Beh</span></p>
+      <h1 class="page-title article-title">Maratón Pohronským Inovcom 2018</h1>
+      <p class="page-subtitle article-meta-line">Juraj Maťaše · 9. mar 2018 · 10 min čítania</p>
+      <div class="page-top-extra article-tags"></div>
     </div>
-    <div class="article-tags"></div>
   </div>
 </header>
 
 <div class="article-container">
-  <article class="article-body">
+  <article class="article-body vt-body">
     <p>Skoro dva roky mi trvalo kym sa mi podari opat “zabehnut” maratonsku vzdialenost. Na start som sa staval s obrovskym respektom a trochu aj so strachom. Obe veci mi pred dvoma rokmi chybali. Presne tu na Maratone Pohronskym Inovcom som pred dvoma rokmi bezal svoj prvy maraton. Mal som dobre natrenovane a bol som plny vasne k dlhym behom. Moja mysel bola na ne pripravena, telo ale nie. Inovecky maraton som zabehol v pohode a v ciely som mal chut bezat dalej. Uz vtedy som bol prihlaseny na strednu vzdialenost (69km) ultramaratonu 100 miles of Istria. Trenoval som naplno, behal 200km mesacne a Istriu som zvladol. Po Istrii ale moje koleno povedalo ze so mnou konci.</p>
     <p>Trvalo asi rok kym som sa dal dokopy. Kazdy bezec ktory si presiel zranenim, ktore mu znemoznuje behat vie, ake je to hrozne zrazu nedokazat prebehnut jediny kilometer. Zrazu mi chybali priatelia ktorych poznam len z behov, chybala mi ta jedinecna atmosfera trailovych pretekov.</p>
     <p>Koleno sa nakoniec zmierilo s mojim divnym konickom a mohol som znova trenovat. Bolo to trochu depresivne, lebo mi velmi chybala kondicka ktoru som mal vybudovanu. Telo si ale predsa nieco pamatalo a zacal som znova naberat stratenu vytrvalost. Koncom roka bol plan na prve mesiace 2018 jasny: 17. februara: Maraton Pohronskym Inovcom, 7. aprila: 67km na 100 miles of Istria.</p>
@@ -59,16 +66,17 @@
     <p>Nasleduje posledny usek s hlbokym snehom a moje nohy zacinaju byt dost unavene. Viem ze nieje dlhy, ale som rad ked vybehnem na upravenu cestu a viem ze ma caka finalny 5 kilometrovy zbeh do Novej Bane. Koleno ani naznak bolesti, tak si to trochu pustim rychlejsie a “uzivam” si zbeh. Nohy ma zacinaju poriadne palit a cela situacia mi pripomina moj vobec prvy trailovy beh na Behu Sulovskymi Skalami, kde som pri zbehoch krical nahlas od bolesti. Po niekolkych kilometroch nekonciaceho zbehu zacina asfalt v Novej Bani. Pri kazdom kroku citim akoby niekto udieral zo spodu na cestu s tazkym kladivom. Neviem si predstavit bezat cely maraton po takomto povrchu.</p>
     <p>Posledny kilometer zacinam v hlave kalkulovat ci mi to vyjde vobec na maraton. Na starte som nejak haluzil s hodinkami a zapol som ich kusok neskor. Bolo by skoda kebyze mam workout na Strave len kusok pod maraton. Dobieham ku dveram skoly kde je ciel a hodinky ukazuju 42,18. Zastavujem hodinky, kracam dovnutra a smejem sa ake blbosti mi chodia po rozume ked dlho bezim.</p>
   </article>
-  <nav class="post-nav">
+  <nav class="post-nav vt-article-nav" aria-label="Navigácia medzi článkami">
     <div></div>
-    <a href="trumpov-twitter-a-sloboda-slova.html" class="post-nav-card next">
+    <a href="trumpov-twitter-a-sloboda-slova.html" class="post-nav-card next" data-vt-direction="next">
         <div class="post-nav-label">Nasledujúci článok →</div>
         <div class="post-nav-title">Trumpov twitter a sloboda slova</div>
       </a>
   </nav>
 </div>
 
-<footer class="footer">
+</main>
+<footer class="site-chrome footer">
   <div class="footer-inner">
     <div class="footer-logo">Juraj Maťaše<span>.</span></div>
     <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>

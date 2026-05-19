@@ -2,35 +2,50 @@
 <html lang="sk">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>jekyll — Juraj Maťaše</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <script src="js/theme.js"></script>
 </head>
-<body>
+<body class="site-shell">
+<header class="site-chrome site-header">
 <nav class="navbar" id="navbar">
   <div class="nav-container">
     <a href="index.html" class="nav-logo">
       <span class="nav-logo-mark">JM</span>
-      Juraj Maťaše
+      <span class="nav-logo-text">Juraj Maťaše</span>
     </a>
-    <ul class="nav-links">
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Otvoriť menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Zavrieť menu">×</button>
+      </li>
       <li><a href="index.html">Blog</a></li><li><a href="kategorie.html">Kategórie</a></li><li><a href="stitky.html" class="active">Štítky</a></li><li><a href="projekty.html">Projekty</a></li><li><a href="cv.html">CV</a></li>
-      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+      <li class="nav-theme-item"><button type="button" class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
     </ul>
   </div>
+  <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Zavrieť menu" aria-hidden="true" tabindex="-1"></button>
 </nav>
+</header>
+<main class="page-main">
 
-<section class="page-header">
+<section class="page-header vt-top">
   <div class="page-header-inner">
-    <div class="hero-eyebrow"><a href="stitky.html">Štítky</a></div>
-    <h1 class="page-title">jekyll</h1>
-    <p class="page-subtitle">1 článok</p>
+    <div class="vt-top-core">
+      <div class="hero-eyebrow"><a href="stitky.html">Štítky</a></div>
+      <h1 class="page-title">jekyll</h1>
+      <p class="page-subtitle">1 článok</p>
+    </div>
   </div>
 </section>
 
-<div class="page-content">
+<div class="page-content vt-body">
   <ul class="archive-list"><li class="archive-item">
           <span class="archive-date">31. mar 2023</span>
           <a href="clanky/ahoj-jekyll.html" class="archive-link">Ahoj Jekyll!</a>
@@ -38,7 +53,8 @@
 </ul>
 </div>
 
-<footer class="footer">
+</main>
+<footer class="site-chrome footer">
   <div class="footer-inner">
     <div class="footer-logo">Juraj Maťaše<span>.</span></div>
     <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>
