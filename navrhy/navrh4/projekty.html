@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projekty — Juraj Maťaše</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-mark">JM</span>
+      Juraj Maťaše
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Blog</a></li><li><a href="kategorie.html">Kategórie</a></li><li><a href="stitky.html">Štítky</a></li><li><a href="projekty.html" class="active">Projekty</a></li><li><a href="cv.html">CV</a></li>
+      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-header">
+  <div class="page-header-inner">
+    <div class="hero-eyebrow">Portfólio</div>
+    <h1 class="page-title">Moje projekty</h1>
+    <p class="page-subtitle">Side projekty v Ruby on Rails a okolí.</p>
+  </div>
+</section>
+
+<div class="page-content">
+  <div class="projects-grid">
+    <article class="project-card">
+      <div class="project-icon">⚙</div>
+      <h3 class="project-title">Blog on Rails</h3>
+      <p class="project-desc">Jednoduché CMS, pri ktorom si skúšam nové funkcie Ruby on Rails. Ako napríklad nové funkcie pre vlastnú autentifikáciu vo verzii 7.1.</p>
+      <a href="https://github.com/majur/blog-on-rails" class="project-link">GitHub →</a>
+    </article>
+    <article class="project-card">
+      <div class="project-icon">🔑</div>
+      <h3 class="project-title">Token service</h3>
+      <p class="project-desc">Backend, ktorý dokáže vytvárať a overovať tokeny.</p>
+      <a href="https://github.com/majur/token_service" class="project-link">GitHub →</a>
+    </article>
+    <article class="project-card">
+      <div class="project-icon">✓</div>
+      <h3 class="project-title">Todolist backend</h3>
+      <p class="project-desc">Chcel som si vyskúšať, ako sa píše backend. Článok o postupe je <a href="clanky/how-to-create-simple-backend-with-rails.html">tu</a>.</p>
+      <a href="https://github.com/majur/todo_rails_backend" class="project-link">GitHub →</a>
+    </article>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Juraj Maťaše<span>.</span></div>
+    <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>
+  </div>
+</footer>
+</body>
+</html>

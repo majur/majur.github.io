@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Juraj Maťaše</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/theme.js"></script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-mark">JM</span>
+      Juraj Maťaše
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Blog</a></li><li><a href="kategorie.html">Kategórie</a></li><li><a href="stitky.html">Štítky</a></li><li><a href="projekty.html">Projekty</a></li><li><a href="cv.html">CV</a></li>
+      <li><button class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-avatar" aria-hidden="true">JM</div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Osobný blog</div>
+      <h1 class="hero-title">Technológie, <em>sloboda</em> a&nbsp;beh</h1>
+      <p class="hero-subtitle">Píšem o programovaní, open source, slobode na internete a občas aj o behu.</p>
+      <div class="hero-meta">
+        <span class="hero-badge">QA inžinier</span>
+        <span class="hero-badge">Bratislava</span>
+        <span class="hero-badge">Ruby on Rails</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <section class="featured">
+    <div class="section-label">Najnovší článok</div>
+    <article class="featured-card">
+      <div class="featured-img">[ Ruby on Rails logo ]</div>
+      <div class="featured-body">
+        <span class="featured-cat">Dev</span>
+        <h2 class="featured-title">
+          <a href="clanky/how-to-create-simple-backend-with-rails.html">How to create simple backend with rails</a>
+        </h2>
+        <p class="featured-excerpt">A bigger project from my portfolio is a CMS written in Ruby on Rails. But I need a few smaller projects first. The first one is a simple backend for a todo list application.</p>
+        <div class="featured-meta">
+          <span>31. mar 2024</span>
+          <span class="featured-meta-sep"></span>
+          <span>7 min čítania</span>
+          <span class="featured-meta-sep"></span>
+          <span class="mini-tag">Backend</span><span class="mini-tag">Ruby</span><span class="mini-tag">Rails</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="posts-section">
+    <div class="section-label">Ďalšie články</div>
+    <div class="posts-grid">
+<article class="post-card">
+        <div class="post-card-accent"></div>
+        <div class="post-card-body">
+          <div class="post-card-cat">Dev</div>
+          <h3 class="post-card-title"><a href="clanky/ahoj-jekyll.html">Ahoj Jekyll!</a></h3>
+          <p class="post-card-excerpt">Nový blog, nová platforma. Prečo som si vybral Jekyll a ako som ho nastavil pre dvojjazyčný obsah.</p>
+          <div class="post-card-meta">
+            <span>31. mar 2023</span>
+            <span class="mini-tag">100DaysToOffload-sk</span><span class="mini-tag">jekyll</span>
+          </div>
+        </div>
+      </article>
+<article class="post-card">
+        <div class="post-card-accent"></div>
+        <div class="post-card-body">
+          <div class="post-card-cat">Internet</div>
+          <h3 class="post-card-title"><a href="clanky/socialna-siet-buducnosti-ma-23-rokov.html">Sociálna sieť budúcnosti má 23 rokov</a></h3>
+          <p class="post-card-excerpt">RSS je technológia stará viac ako dve dekády, no stále je jedným z najlepších spôsobov, ako sledovať obsah na webe.</p>
+          <div class="post-card-meta">
+            <span>26. mar 2023</span>
+            <span class="mini-tag">100DaysToOffload-sk</span>
+          </div>
+        </div>
+      </article>
+<article class="post-card">
+        <div class="post-card-accent"></div>
+        <div class="post-card-body">
+          <div class="post-card-cat">Dev</div>
+          <h3 class="post-card-title"><a href="clanky/moj-setup.html">Môj setup</a></h3>
+          <p class="post-card-excerpt">Zabudnite na ideálny setup. Nepotrebujete ho. Musíte len začať s tým, čo máte.</p>
+          <div class="post-card-meta">
+            <span>6. okt 2021</span>
+            
+          </div>
+        </div>
+      </article>
+<article class="post-card">
+        <div class="post-card-accent"></div>
+        <div class="post-card-body">
+          <div class="post-card-cat">Sloboda · Bitcoin</div>
+          <h3 class="post-card-title"><a href="clanky/preco-hodnota-bitcoinu-stupa.html">Prečo hodnota Bitcoinu stúpa?</a></h3>
+          <p class="post-card-excerpt">Bitcoin nie je len špekulatívna bublina. Za jeho rastúcou hodnotou stoja fundamentálne ekonomické princípy.</p>
+          <div class="post-card-meta">
+            <span>26. feb 2021</span>
+            
+          </div>
+        </div>
+      </article>
+<article class="post-card">
+        <div class="post-card-accent"></div>
+        <div class="post-card-body">
+          <div class="post-card-cat">Sloboda</div>
+          <h3 class="post-card-title"><a href="clanky/trumpov-twitter-a-sloboda-slova.html">Trumpov twitter a sloboda slova</a></h3>
+          <p class="post-card-excerpt">Keď súkromná spoločnosť umlčí prezidenta, musíme sa zamyslieť nad tým, čo znamená sloboda slova v digitálnom veku.</p>
+          <div class="post-card-meta">
+            <span>15. jan 2021</span>
+            
+          </div>
+        </div>
+      </article>
+<article class="post-card">
+        <div class="post-card-accent"></div>
+        <div class="post-card-body">
+          <div class="post-card-cat">Beh</div>
+          <h3 class="post-card-title"><a href="clanky/maraton-pohronskym-inovcom-2018.html">Maratón Pohronským Inovcom 2018</a></h3>
+          <p class="post-card-excerpt">Zážitok z bežeckého maratónu cez jedno z najkrajších slovenských pohorí.</p>
+          <div class="post-card-meta">
+            <span>9. mar 2018</span>
+            
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="tags-strip">
+      <a href="stitok-rails.html" class="tag-chip">Rails</a><a href="stitok-ruby.html" class="tag-chip">Ruby</a><a href="stitok-backend.html" class="tag-chip">Backend</a><a href="stitok-jekyll.html" class="tag-chip">jekyll</a><a href="stitok-100daystooffload.html" class="tag-chip">100DaysToOffload-sk</a>
+    </div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Juraj Maťaše<span>.</span></div>
+    <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>
+  </div>
+</footer>
+</body>
+</html>
