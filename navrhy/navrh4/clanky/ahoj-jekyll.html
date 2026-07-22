@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ahoj Jekyll! — Juraj Maťaše</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Syne:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<script src="../js/theme.js"></script>
+
+</head>
+<body class="site-shell page-article">
+<header class="site-chrome site-header">
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-logo-mark">JM</span>
+      <span class="nav-logo-text">Juraj Maťaše</span>
+    </a>
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Otvoriť menu">
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+    <ul class="nav-links" id="nav-menu">
+      <li class="nav-menu-header">
+        <span class="nav-menu-title">Menu</span>
+        <button type="button" class="nav-close" id="nav-close" aria-label="Zavrieť menu">×</button>
+      </li>
+      <li><a href="../index.html" class="active">Blog</a></li><li><a href="../kategorie.html">Kategórie</a></li><li><a href="../stitky.html">Štítky</a></li><li><a href="../fonty.html">Fonty</a></li><li><a href="../projekty.html">Projekty</a></li><li><a href="../cv.html">CV</a></li>
+      <li class="nav-theme-item"><button type="button" class="theme-switch" onclick="toggleTheme()" aria-label="Prepínač témy">☀ / ☾</button></li>
+    </ul>
+  </div>
+  <button type="button" class="nav-backdrop" id="nav-backdrop" aria-label="Zavrieť menu" aria-hidden="true" tabindex="-1"></button>
+</nav>
+</header>
+<main class="page-main">
+
+<header class="article-header page-header vt-top">
+  <div class="page-header-inner article-header-inner">
+    <div class="vt-top-core">
+      <div class="hero-eyebrow"><nav class="breadcrumb" aria-label="Navigácia"><a href="../index.html">Domov</a> › <span>Článok</span></nav></div>
+      <p class="page-top-lead"><span class="article-cat-badge">Dev</span></p>
+      <h1 class="page-title article-title">Ahoj Jekyll!</h1>
+      <p class="page-subtitle article-meta-line">Juraj Maťaše · 31. mar 2023 · 5 min čítania</p>
+      <div class="page-top-extra article-tags"><a href="../stitok-100daystooffload.html" class="mini-tag">100DaysToOffload-sk</a> <a href="../stitok-jekyll.html" class="mini-tag">jekyll</a> </div>
+    </div>
+  </div>
+</header>
+
+<div class="article-container">
+  <article class="article-body vt-body">
+    <p>Mám nový web. Donedávna bežal na mojom Rails projekte <a href="https://github.com/majur/blog-on-rails-legacy">Blog on Rails</a>. S ním sa mi ale nedarí napredovať tak rýchlo ako by som potreboval, a preto som sa rozhodol svoj web zmigrovať na <a href="https://jekyllrb.com">Jekyll</a>. O tomto generátore statických stránok písanom v Ruby som vedel už dlho, ale až pred pár týždnami som si ho vyskúšal. A hneď som si ho zamiloval. Mám z neho podobné pocity aké som mal na mojom začiatku s Ruby on Rails. Zadám pár príkazov do terminálu, a zrazu mi beží nový web v prehliadači.</p>
+    <h2>Ako to funguje? </h2>
+    <p>Funguje to tak že mám šablónu (konkrétne <a href="https://github.com/cotes2020/jekyll-theme-chirpy">túto</a>), ktorá zabezpečuje kde na stránke sa má čo zobraziť, a ako to má vyzerať. Samotný obsah potom píšem v markdowne čo je jazyk určený na písanie formátovaného textu. Vyzerá cca takto:</p>
+    <pre class="language-markdown"><code class="language-markdown"># Nadpis
+
+Bežný text
+
+[Text linku](link)
+
+**Tučné písmo**
+
+![Obrázok](cesta-k-obrazku.png)</code></pre>
+    <p>Keď mám obsah stránky dopísaný, tak jediným príkazom vygenerujem celú stránku ako zložku obsahujúcu .html súbory:</p>
+    <pre class="language-bash"><code class="language-bash">bundle exec jekyll s</code></pre>
+    <p>To môžem potom nahrať na hocijaký hosting. Ja som zvolil pre mna lepšiu možnost a na Githube som si nastavil repozitár, ktorý mi z aktuálnej vetvy <code>main</code> vždy nasadí na Github Pages aktuálny výstup z Jekyllu. Následne som na servery Githubu nasmeroval svoju doménu. A to všetko zadarmo.</p>
+    <p>Hlavná výhoda Jekyllu (ale aj ostatných generátorov statických stránok) je tá, že výstupom je statický web zložený čisto zo súborov .html, .css a obrázkou. Zároveň ale keď zmením niečo v šablóne, napríklad text vo footeri, tak ja to mením v jednom súbore, ale Jekyll mi to zmení vo všetkých .html súboroch, v ktorých sa nachádza footer. Takže mám veľmi rýchly a bezpečný web (bez databázy), ktorý viem jednoduchým spôsobom spravovať.</p>
+    <hr>
+    <p>P.S.: Markdown používam na poznámky v programe <a href="https://obsidian.md">Obsidian</a> už pár rokov. Veľmi odporúčam tento luxusný software.</p>
+    <p><a href="https://100daystooffload.com">#100DaysToOffload</a> 2/100</p>
+  </article>
+  <nav class="post-nav vt-article-nav" aria-label="Navigácia medzi článkami">
+    <a href="socialna-siet-buducnosti-ma-23-rokov.html" class="post-nav-card prev" data-vt-direction="prev">
+        <div class="post-nav-label">← Predošlý článok</div>
+        <div class="post-nav-title">Sociálna sieť budúcnosti má 23 rokov</div>
+      </a>
+    <a href="how-to-create-simple-backend-with-rails.html" class="post-nav-card next" data-vt-direction="next">
+        <div class="post-nav-label">Nasledujúci článok →</div>
+        <div class="post-nav-title">How to create simple backend with rails</div>
+      </a>
+  </nav>
+</div>
+
+</main>
+<footer class="site-chrome footer">
+  <div class="footer-inner">
+    <div class="footer-logo">Juraj Maťaše<span>.</span></div>
+    <div class="footer-copy">© 2026 · Niektoré práva vyhradené (CC BY 4.0) · Statický web</div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-ruby.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+<script>Prism.highlightAll();</script>
+
+</body>
+</html>
