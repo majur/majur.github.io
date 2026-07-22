@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentsHub — AI agenti pre váš biznis</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --slate: #1C2B3A;
+    --slate-mid: #2E4257;
+    --slate-light: #4A6278;
+    --cream: #F7F3EC;
+    --cream-dark: #EDE7DA;
+    --cream-mid: #D9CFBC;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --gold-dark: #A8872E;
+    --gray: #8A9BAA;
+    --text-on-dark: #F7F3EC;
+    --text-muted-dark: #8A9BAA;
+    --text-on-light: #1C2B3A;
+    --text-muted-light: #6B7E8A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 48px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    color: var(--text-on-light);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0;
+    background: rgba(247,243,236,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--cream-mid);
+  }
+
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0;
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon { width: 26px; height: 26px; }
+  .nav-logo-word {
+    font-family: 'Lora', serif;
+    font-size: 20px; font-weight: 400;
+    color: var(--slate);
+    letter-spacing: 0.01em;
+  }
+  .nav-logo-word span { color: var(--gold); }
+
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.06em;
+    color: var(--text-muted-light); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--slate); }
+
+  .nav-cta {
+    background: var(--slate);
+    color: var(--cream) !important;
+    padding: 9px 22px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.04em !important;
+    transition: background 0.2s !important;
+    cursor: pointer;
+  }
+  .nav-cta:hover { background: var(--slate-mid) !important; color: var(--cream) !important; }
+  .nav-cta:focus-visible {
+    outline: 2px solid rgba(247,243,236,0.9);
+    outline-offset: 2px;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--slate);
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: stretch;
+    padding: 120px 0 80px;
+    position: relative; overflow: hidden;
+  }
+
+  .hero > .container {
+    display: flex; flex-direction: column; align-items: flex-start;
+    position: relative;
+    flex: 1;
+  }
+
+  .hero-bg-dots {
+    position: absolute; top: 0; right: 0; bottom: 0;
+    width: 50%; opacity: 0.04;
+    background-image: radial-gradient(circle, #F7F3EC 1.5px, transparent 1.5px);
+    background-size: 28px 28px;
+  }
+
+  .hero-bg-accent {
+    position: absolute; bottom: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+  .hero-bg-accent2 {
+    position: absolute; bottom: -20px; right: -20px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 32px; height: 1px; background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Lora', serif;
+    font-size: clamp(40px, 5.5vw, 72px);
+    font-weight: 400; line-height: 1.18;
+    color: var(--cream);
+    max-width: 700px;
+    margin-bottom: 28px;
+  }
+  .hero-headline em { font-style: italic; color: var(--gold); }
+
+  .hero-sub {
+    font-size: 17px; font-weight: 300; line-height: 1.7;
+    color: var(--text-muted-dark);
+    max-width: 520px; margin-bottom: 48px;
+  }
+
+  .hero-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--slate);
+    padding: 14px 32px;
+    border-radius: 6px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    color: var(--cream);
+    font-size: 14px; font-weight: 500; letter-spacing: 0.04em;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+    transition: gap 0.2s;
+  }
+  .btn-ghost:hover { gap: 12px; }
+  .btn-ghost-arrow { font-size: 16px; }
+
+  .hero-stats {
+    position: absolute; bottom: 48px; right: 48px;
+    display: flex; gap: 40px;
+  }
+  .hero-stat { text-align: right; }
+  .hero-stat-num {
+    font-family: 'Lora', serif;
+    font-size: 32px; font-weight: 400;
+    color: var(--cream);
+  }
+  .hero-stat-num span { color: var(--gold); font-size: 20px; }
+  .hero-stat-label {
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--text-muted-dark); margin-top: 2px;
+  }
+
+  /* SECTION BASE */
+  section { padding: 100px 0; }
+
+  .section-eyebrow {
+    font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-eyebrow::before {
+    content: ''; display: block;
+    width: 24px; height: 1px; background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Lora', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 400; line-height: 1.25;
+    color: var(--slate);
+    max-width: 580px;
+  }
+  .section-title em { font-style: italic; color: var(--gold-dark); }
+
+  /* PAIN */
+  .pain { background: var(--cream-dark); }
+
+  .pain-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+
+  .pain-list { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+
+  .pain-item {
+    display: flex; align-items: flex-start; gap: 20px;
+    padding: 24px 0;
+    border-bottom: 0.5px solid var(--cream-mid);
+  }
+  .pain-item:first-child { border-top: 0.5px solid var(--cream-mid); }
+
+  .pain-num {
+    font-family: 'Lora', serif;
+    font-size: 13px; color: var(--gold);
+    min-width: 24px; padding-top: 2px;
+  }
+  .pain-text {
+    font-size: 15px; font-weight: 400; line-height: 1.6;
+    color: var(--slate);
+  }
+  .pain-text strong { font-weight: 600; }
+
+  .pain-visual {
+    background: var(--slate);
+    border-radius: 12px;
+    padding: 40px;
+    position: relative; overflow: hidden;
+  }
+
+  .chat-bubble {
+    background: rgba(247,243,236,0.08);
+    border: 0.5px solid rgba(247,243,236,0.12);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+  .chat-bubble-label {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-muted-dark); margin-bottom: 6px;
+  }
+  .chat-bubble-text { font-size: 13px; color: var(--cream); line-height: 1.5; }
+
+  .chat-bubble.agent {
+    background: rgba(201,168,76,0.12);
+    border-color: rgba(201,168,76,0.2);
+    margin-left: 20px;
+  }
+  .chat-bubble.agent .chat-bubble-label { color: var(--gold); }
+
+  .pain-visual-tag {
+    position: absolute; top: 16px; right: 16px;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 4px;
+  }
+
+  /* HOW */
+  .how { background: var(--cream); }
+
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .how-card {
+    background: var(--cream-dark);
+    border-radius: 10px;
+    padding: 36px 32px;
+    position: relative;
+  }
+
+  .how-card-num {
+    font-family: 'Lora', serif;
+    font-size: 48px; font-weight: 400;
+    color: var(--cream-mid);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .how-card-title {
+    font-family: 'Lora', serif;
+    font-size: 20px; font-weight: 400;
+    color: var(--slate);
+    margin-bottom: 12px;
+  }
+
+  .how-card-text {
+    font-size: 14px; font-weight: 300; line-height: 1.7;
+    color: var(--text-muted-light);
+  }
+
+  .how-card-accent {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--gold);
+    border-radius: 0 0 10px 10px;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+  .how-card:hover .how-card-accent { transform: scaleX(1); }
+
+  /* VERTICALS */
+  .verticals { background: var(--slate); }
+  .verticals .section-title { color: var(--cream); }
+  .verticals .section-eyebrow::before { background: var(--gold); }
+
+  .verticals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+
+  .vertical-card {
+    background: rgba(247,243,236,0.06);
+    border: 0.5px solid rgba(247,243,236,0.1);
+    border-radius: 12px;
+    padding: 36px 28px;
+    transition: background 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .vertical-card:hover {
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.25);
+  }
+
+  .vertical-icon { margin-bottom: 18px; }
+  .vertical-icon svg { width: 34px; height: 34px; }
+
+  .vertical-name {
+    font-family: 'Lora', serif;
+    font-size: 20px; font-weight: 400;
+    color: var(--cream); margin-bottom: 12px;
+  }
+
+  .vertical-use {
+    font-size: 14px; font-weight: 300; line-height: 1.6;
+    color: var(--text-muted-dark);
+  }
+
+  /* Responsive tweaks for verticals */
+  @media (max-width: 900px) {
+    .verticals-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  }
+  @media (max-width: 600px) {
+    .verticals-grid { grid-template-columns: 1fr; gap: 16px; }
+    .vertical-card { padding: 24px 18px; }
+    .vertical-name { font-size: 18px; }
+    .vertical-use { font-size: 14px; }
+  }
+
+  /* PRICING */
+  .pricing { background: var(--cream-dark); }
+
+  .pricing-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+    max-width: 1120px;
+  }
+
+  .pricing-card {
+    background: var(--cream);
+    border: 0.5px solid var(--cream-mid);
+    border-radius: 10px;
+    padding: 40px 36px;
+  }
+
+  .pricing-card.featured {
+    background: var(--slate);
+    border-color: var(--slate);
+  }
+
+  .pricing-badge {
+    display: inline-block;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold-dark);
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 4px;
+    margin-bottom: 24px;
+  }
+  .pricing-card.featured .pricing-badge {
+    background: rgba(201,168,76,0.2);
+    color: var(--gold);
+  }
+
+  .pricing-price {
+    font-family: 'Lora', serif;
+    font-size: 44px; font-weight: 400;
+    color: var(--slate); line-height: 1;
+    margin-bottom: 6px;
+  }
+  .pricing-price span { font-size: 20px; color: var(--gold-dark); }
+  .pricing-card.featured .pricing-price { color: var(--cream); }
+  .pricing-card.featured .pricing-price span { color: var(--gold); }
+
+  .pricing-period {
+    font-size: 13px; color: var(--text-muted-light);
+    margin-bottom: 28px;
+  }
+  .pricing-card.featured .pricing-period { color: var(--text-muted-dark); }
+
+  .pricing-divider {
+    height: 0.5px; background: var(--cream-mid);
+    margin-bottom: 24px;
+  }
+  .pricing-card.featured .pricing-divider { background: rgba(247,243,236,0.12); }
+
+  .pricing-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+
+  .pricing-feature {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 14px; font-weight: 300; line-height: 1.5;
+    color: var(--slate);
+  }
+  .pricing-card.featured .pricing-feature { color: var(--cream); }
+
+  .pricing-feature-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .btn-pricing {
+    display: block; width: 100%; text-align: center;
+    padding: 13px; border-radius: 6px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
+    text-decoration: none; transition: all 0.2s;
+    border: 1.5px solid var(--slate);
+    color: var(--slate); background: transparent;
+  }
+  .btn-pricing:hover { background: var(--slate); color: var(--cream); }
+
+  .pricing-card.featured .btn-pricing {
+    background: var(--gold); color: var(--slate);
+    border-color: var(--gold);
+  }
+  .pricing-card.featured .btn-pricing:hover { background: var(--gold-light); }
+
+  /* CONTACT */
+  .contact { background: var(--slate); }
+  .contact .section-title { color: var(--cream); }
+
+  .contact-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 56px;
+    align-items: start;
+  }
+
+  .contact-text {
+    font-size: 16px; font-weight: 300; line-height: 1.8;
+    color: var(--text-muted-dark);
+    margin-bottom: 36px;
+  }
+
+  .contact-details { display: flex; flex-direction: column; gap: 16px; }
+
+  .contact-detail {
+    display: flex; align-items: center; gap: 14px;
+  }
+
+  .contact-detail-icon {
+    width: 36px; height: 36px; border-radius: 8px;
+    background: rgba(201,168,76,0.1);
+    border: 0.5px solid rgba(201,168,76,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-detail-icon svg { width: 16px; height: 16px; }
+
+  .contact-detail-label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-muted-dark); margin-bottom: 2px;
+  }
+  .contact-detail-value {
+    font-size: 14px; font-weight: 500; color: var(--cream);
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .form-label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-muted-dark);
+  }
+
+  .form-input, .form-select, .form-textarea {
+    background: rgba(247,243,236,0.06);
+    border: 0.5px solid rgba(247,243,236,0.12);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px; font-weight: 300;
+    color: var(--cream);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder { color: rgba(247,243,236,0.25); }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: rgba(201,168,76,0.4);
+  }
+
+  .form-select option { background: var(--slate); color: var(--cream); }
+
+  .form-textarea { resize: vertical; min-height: 110px; }
+
+  .form-submit {
+    background: var(--gold);
+    color: var(--slate);
+    border: none; border-radius: 6px;
+    padding: 14px 32px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    background: #111D27;
+    padding: 40px 0;
+  }
+
+  .footer-inner {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .footer-logo {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Lora', serif;
+    font-size: 16px; color: var(--cream);
+  }
+  .footer-logo span { color: var(--gold); }
+
+  .footer-copy {
+    font-size: 12px; color: rgba(247,243,236,0.3);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a {
+    font-size: 12px; color: rgba(247,243,236,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--cream); }
+
+  /* MODAL OVERLAY */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(28,43,58,0.72);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.active { display: flex; }
+
+  /* CONSENT MODAL */
+  .consent-modal {
+    background: var(--cream);
+    border-radius: 14px;
+    padding: 40px;
+    max-width: 460px;
+    width: 100%;
+    box-shadow: 0 32px 80px rgba(28,43,58,0.3);
+  }
+  .consent-modal-title {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--slate);
+    margin-bottom: 14px;
+  }
+  .consent-modal-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: var(--text-muted-light);
+    margin-bottom: 24px;
+  }
+  .consent-checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .consent-checkbox-row input[type="checkbox"] {
+    margin-top: 2px;
+    accent-color: var(--gold);
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .consent-checkbox-row label {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text-on-light);
+    cursor: pointer;
+  }
+  .consent-checkbox-row a {
+    color: var(--gold);
+    text-decoration: underline;
+  }
+  .btn-start-chat {
+    display: block;
+    width: 100%;
+    background: var(--slate);
+    color: var(--cream);
+    border: none;
+    padding: 14px;
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-start-chat:hover:not(:disabled) { background: var(--slate-mid); }
+  .btn-start-chat:disabled { opacity: 0.38; cursor: not-allowed; }
+
+  /* CHAT MODAL */
+  .chat-modal {
+    background: var(--cream);
+    border-radius: 14px;
+    max-width: 560px;
+    width: 100%;
+    height: 78vh;
+    max-height: 640px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 32px 80px rgba(28,43,58,0.3);
+    overflow: hidden;
+  }
+  .chat-header {
+    background: var(--slate);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .chat-header-title {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--cream);
+  }
+  .chat-header-sub {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 3px;
+    letter-spacing: 0.03em;
+  }
+  .chat-close-btn {
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 4px;
+    line-height: 0;
+    transition: color 0.2s;
+  }
+  .chat-close-btn:hover { color: var(--cream); }
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .chat-message { display: flex; flex-direction: column; max-width: 82%; }
+  .chat-message.ai  { align-self: flex-start; }
+  .chat-message.user { align-self: flex-end; }
+  .chat-bubble {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .chat-message.ai  .chat-bubble {
+    background: var(--cream-dark);
+    color: var(--text-on-light);
+    border-bottom-left-radius: 3px;
+  }
+  .chat-message.user .chat-bubble {
+    background: var(--slate);
+    color: var(--cream);
+    border-bottom-right-radius: 3px;
+  }
+  .chat-message-time {
+    font-size: 10px;
+    color: var(--gray);
+    margin-top: 4px;
+    padding: 0 4px;
+  }
+  .chat-message.user .chat-message-time { text-align: right; }
+  .chat-input-area {
+    border-top: 1px solid var(--cream-mid);
+    padding: 12px 14px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    background: var(--cream);
+    flex-shrink: 0;
+  }
+  .chat-input {
+    flex: 1;
+    border: 1px solid var(--cream-mid);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    resize: none;
+    min-height: 42px;
+    max-height: 120px;
+    background: #fff;
+    color: var(--text-on-light);
+    outline: none;
+    transition: border-color 0.2s;
+    overflow-y: auto;
+  }
+  .chat-input:focus { border-color: var(--gold); }
+  .chat-send-btn {
+    background: var(--slate);
+    border: none;
+    border-radius: 8px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .chat-send-btn:hover:not(:disabled) { background: var(--gold); }
+  .chat-send-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+  .chat-typing {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 12px 14px;
+    background: var(--cream-dark);
+    border-radius: 12px;
+    border-bottom-left-radius: 3px;
+    width: fit-content;
+  }
+  .chat-typing span {
+    width: 6px; height: 6px;
+    background: var(--gray);
+    border-radius: 50%;
+    animation: typing-dot 1.3s infinite;
+  }
+  .chat-typing span:nth-child(2) { animation-delay: 0.22s; }
+  .chat-typing span:nth-child(3) { animation-delay: 0.44s; }
+  @keyframes typing-dot {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .container { padding: 0 24px; }
+    nav { padding: 0; }
+    .nav-inner { padding: 16px 0; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 0 80px; }
+    .hero-stats { display: none; }
+    section { padding: 72px 0; }
+    .pain-inner { grid-template-columns: 1fr; gap: 40px; }
+    .how-grid { grid-template-columns: 1fr; }
+    .verticals-grid { grid-template-columns: repeat(2, 1fr); }
+    .pricing-inner { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+    <svg class="nav-logo-icon" viewBox="0 0 26 26">
+      <circle cx="7" cy="13" r="4" fill="#C9A84C"/>
+      <circle cx="20" cy="7" r="2.8" fill="#1C2B3A" stroke="#8A9BAA" stroke-width="0.5"/>
+      <circle cx="20" cy="19" r="2.8" fill="#1C2B3A" stroke="#8A9BAA" stroke-width="0.5"/>
+      <line x1="11" y1="13" x2="17.2" y2="7.8" stroke="#C9A84C" stroke-width="1" opacity="0.7"/>
+      <line x1="11" y1="13" x2="17.2" y2="18.2" stroke="#C9A84C" stroke-width="1" opacity="0.7"/>
+    </svg>
+    <span class="nav-logo-word">Agents<span>Hub</span></span>
+  </a>
+  <div class="nav-links">
+    <a href="#ako">Ako to funguje</a>
+    <a href="#vertikaly">Pre koho</a>
+    <a href="#ceny">Ceny</a>
+    <button class="nav-cta" onclick="openConsentModal()">Spýtať sa AI</button>
+  </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-dots"></div>
+  <div class="hero-bg-accent"></div>
+  <div class="hero-bg-accent2"></div>
+
+  <div class="container">
+    <div class="hero-eyebrow">AI automatizácia pre SK/CZ firmy</div>
+
+    <h1 class="hero-headline">
+      Nestíhate sami?<br>
+      Nechajte to<br>
+      na <em>agentov.</em>
+    </h1>
+
+    <p class="hero-sub">
+      AI agenti, ktorí vybavujú zákazníkov, spracúvajú objednávky a kvalifikujú leads — 24 hodín denne, bez prestávky.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#" class="btn-primary" onclick="openConsentModal(); return false;">Spýtať sa AI</a>
+      <a href="#ako" class="btn-ghost">
+        Ako to funguje <span class="btn-ghost-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">90<span>%</span></div>
+        <div class="hero-stat-label">menej rutinnej práce</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">24<span>/7</span></div>
+        <div class="hero-stat-label">dostupnosť</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">499<span>€</span></div>
+        <div class="hero-stat-label">od / agent</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section class="pain" id="problem">
+  <div class="container">
+  <div class="pain-inner">
+    <div>
+      <div class="section-eyebrow">Problém</div>
+      <h2 class="section-title">Zákazníci čakajú.<br>Vy <em>nestíhate.</em></h2>
+
+      <div class="pain-list">
+        <div class="pain-item">
+          <div class="pain-num">01</div>
+          <div class="pain-text">Prichádzajú otázky cez víkend a večer — <strong>nikto neodpovedá</strong>, zákazník odchádza ku konkurencii.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">02</div>
+          <div class="pain-text">Hľadáte <strong>nového zamestnanca</strong> — mesiac výberu, onboarding, riziká. A stále len jeden človek.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-num">03</div>
+          <div class="pain-text">Opakujúce sa otázky a úkony <strong>berú čas</strong>, ktorý by ste mohli investovať do rastu firmy.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pain-visual">
+      <div class="pain-visual-tag">AI agent v akcii</div>
+      <div class="chat-bubble">
+        <div class="chat-bubble-label">Zákazník — piatok 19:42</div>
+        <div class="chat-bubble-text">Dobrý večer, chcel by som vedieť, či mám v objednávke č. 4821 správnu adresu doručenia...</div>
+      </div>
+      <div class="chat-bubble agent">
+        <div class="chat-bubble-label">AI agent — piatok 19:42</div>
+        <div class="chat-bubble-text">Dobrý večer! Pozriem sa na to hneď. Objednávka č. 4821 — adresa: Hlavná 12, Bratislava. Je to správne?</div>
+      </div>
+      <div class="chat-bubble">
+        <div class="chat-bubble-label">Zákazník — piatok 19:43</div>
+        <div class="chat-bubble-text">Áno, presne tak. Ďakujem za rýchlu odpoveď!</div>
+      </div>
+      <div class="chat-bubble agent">
+        <div class="chat-bubble-label">AI agent — piatok 19:43</div>
+        <div class="chat-bubble-text">Skvelé, objednávka ide v pondelok ráno. Môžem vám ešte s niečím pomôcť?</div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<!-- HOW -->
+<section class="how" id="ako">
+  <div class="container">
+  <div class="section-eyebrow">Proces</div>
+  <h2 class="section-title">Implementácia<br>za <em>7 dní.</em></h2>
+
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-card-num">01</div>
+      <div class="how-card-title">Analýza</div>
+      <div class="how-card-text">Zistíme, kde vám unikajú zákazníci a ktoré úkony zaberajú najviac času. Spoločne definujeme, čo má agent robiť.</div>
+      <div class="how-card-accent"></div>
+    </div>
+    <div class="how-card">
+      <div class="how-card-num">02</div>
+      <div class="how-card-title">Implementácia</div>
+      <div class="how-card-text">Postavíme agenta na mieru vašej firme — napojíme ho na vaše systémy, naučíme ho vašu komunikáciu a produkty.</div>
+      <div class="how-card-accent"></div>
+    </div>
+    <div class="how-card">
+      <div class="how-card-num">03</div>
+      <div class="how-card-title">Spustenie</div>
+      <div class="how-card-text">Agent ide live. Vy dostávate report čo vybavil, čo eskaloval na vás a koľko hodín práce ušetril za mesiac.</div>
+      <div class="how-card-accent"></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- VERTICALS -->
+<section class="verticals" id="vertikaly">
+  <div class="container">
+  <div class="section-eyebrow">Pre koho</div>
+  <h2 class="section-title">Riešenia pre<br><em>každý odbor.</em></h2>
+
+  <div class="verticals-grid">
+    <div class="vertical-card">
+      <div class="vertical-icon">
+        <svg viewBox="0 0 28 28" fill="none">
+          <rect x="4" y="8" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M4 12h20" stroke="#C9A84C" stroke-width="1"/>
+          <circle cx="9" cy="17" r="1.5" fill="#C9A84C"/>
+          <circle cx="14" cy="17" r="1.5" fill="#8A9BAA" opacity="0.6"/>
+          <path d="M9 4l5 4 5-4" stroke="#8A9BAA" stroke-width="1" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="vertical-name">E-shopy</div>
+      <div class="vertical-use">Agent vybavuje otázky o stave objednávok, reklamáciách a vratkách — bez čakania. Odporúča produkty podľa toho, čo zákazník hľadá, a znižuje počet opustených košíkov.</div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-icon">
+        <svg viewBox="0 0 28 28" fill="none">
+          <rect x="5" y="4" width="18" height="20" rx="2" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M9 10h10M9 14h10M9 18h6" stroke="#8A9BAA" stroke-width="1" opacity="0.6"/>
+          <circle cx="20" cy="20" r="4" fill="#1C2B3A" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M18.5 20l1 1 2-2" stroke="#C9A84C" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="vertical-name">Realitky</div>
+      <div class="vertical-use">Agent kvalifikuje každý dopyt ešte predtým, než sa dostane k maklérovi. Bookuje prehliadky, odpovedá na otázky o nehnuteľnostiach a sleduje záujemcov, kým nie sú pripravení kúpiť.</div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-icon">
+        <svg viewBox="0 0 28 28" fill="none">
+          <path d="M14 4C8.477 4 4 8.477 4 14s4.477 10 10 10 10-4.477 10-10S19.523 4 14 4z" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M14 8v6l4 2" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="vertical-name">Kliniky</div>
+      <div class="vertical-use">Agent prijíma objednávky pacientov, posiela potvrdenia a pripomienky, odpovedá na bežné otázky o ordinačných hodinách a výkonoch — lekár sa venuje pacientom, nie telefónu.</div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-icon">
+        <svg viewBox="0 0 28 28" fill="none">
+          <path d="M6 22l4-4h8l4 4" stroke="#8A9BAA" stroke-width="1" opacity="0.5"/>
+          <rect x="8" y="6" width="12" height="14" rx="1" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M11 10h6M11 13h6M11 16h4" stroke="#8A9BAA" stroke-width="1" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="vertical-name">Účtovníci</div>
+      <div class="vertical-use">Agent prijíma doklady od klientov, potvrdzuje ich príjem a komunikuje čo chýba. Klienti majú vždy odpoveď, vy máte poriadok v podkladoch bez neustáleho vyrušovania.</div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-icon">
+        <svg viewBox="0 0 28 28" fill="none">
+          <path d="M6 8h16M6 14h10M6 20h12" stroke="#8A9BAA" stroke-width="1" opacity="0.5"/>
+          <circle cx="21" cy="20" r="4" fill="#1C2B3A" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M19.5 20h3M21 18.5v3" stroke="#C9A84C" stroke-width="1" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="vertical-name">Advokáti</div>
+      <div class="vertical-use">Agent zachytáva nové dopyty, zbiera základné informácie o prípade a bookuje konzultácie. Vy sa venujete existujúcim klientom — žiadny dopyt nespadne do prázdna.</div>
+    </div>
+
+    <div class="vertical-card">
+      <div class="vertical-icon">
+        <svg viewBox="0 0 28 28" fill="none">
+          <rect x="4" y="6" width="20" height="14" rx="2" stroke="#C9A84C" stroke-width="1"/>
+          <path d="M6 10h16" stroke="#8A9BAA" stroke-width="1" opacity="0.6"/>
+          <circle cx="9" cy="18" r="1.5" fill="#C9A84C"/>
+        </svg>
+      </div>
+      <div class="vertical-name">Reštaurácie</div>
+      <div class="vertical-use">Agent prijíma rezervácie, potvrdzuje ich a odpovedá na otázky o menu, alergénoch či špeciálnych požiadavkách. Obsluha sa venuje hosťom, nie telefonátom a správam.</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="ceny">
+  <div class="container">
+  <div class="section-eyebrow">Ceny</div>
+  <h2 class="section-title">Jasné ceny,<br><em>žiadne prekvapenia.</em></h2>
+
+  <div class="pricing-inner">
+    <div class="pricing-card">
+      <div class="pricing-badge">Jednorazovo</div>
+      <div class="pricing-price">499<span> €</span></div>
+      <div class="pricing-period">za jedného agenta</div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-features">
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Analýza vašich potrieb</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Implementácia na mieru</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Napojenie na váš systém</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Spustenie do 7 dní</div>
+        </div>
+      </div>
+      <a href="#" class="btn-pricing" onclick="openConsentModal(); return false;">Spýtať sa AI</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Mesačne</div>
+      <div class="pricing-price">149<span> €/mes</span></div>
+      <div class="pricing-period">po implementácii</div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-features">
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Monitoring a optimalizácia</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Mesačný report výkonu</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Aktualizácie podľa zmien</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Podpora do 24 hodín</div>
+        </div>
+      </div>
+      <a href="#kontakt" class="btn-pricing">Kontakt</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-badge">INDIVIDUáLNE</div>
+      <div class="pricing-price">Na dopyt</div>
+      <div class="pricing-period">podľa počtu agentov</div>
+      <div class="pricing-divider"></div>
+      <div class="pricing-features">
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Neobmedzený počet agentov</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Viac kanálov a integrácií</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Prioritná podpora</div>
+        </div>
+        <div class="pricing-feature">
+          <div class="pricing-feature-dot"></div>
+          <div>Dedikovaný onboarding</div>
+        </div>
+      </div>
+      <a href="#kontakt" class="btn-pricing">Nezáväzná konzultácia</a>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="kontakt">
+  <div class="container">
+  <div class="section-eyebrow">Kontakt</div>
+  <h2 class="section-title">Dohodnime si<br><em>demo.</em></h2>
+
+  <div class="contact-inner">
+    <div>
+      <p class="contact-text">
+        Ukážem vám živého agenta priamo na vašom type biznisu. Bezplatne, bez záväzkov. Ak to dáva zmysel — dohodne sa zvyšok.
+      </p>
+      <div class="contact-details">
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 16 16" fill="none">
+              <rect x="1" y="3" width="14" height="10" rx="1.5" stroke="#C9A84C" stroke-width="1"/>
+              <path d="M1 5.5L8 9.5L15 5.5" stroke="#C9A84C" stroke-width="1"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Email</div>
+            <div class="contact-detail-value">juraj@agentshub.sk</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 16 16" fill="none">
+              <path d="M3.5 2C3.2 1.7 2.8 1.7 2.5 2L1.5 3C0.8 3.7 0.8 5 1.5 6.5C3 9.5 6.5 13 9.5 14.5C11 15.2 12.3 15.2 13 14.5L14 13.5C14.3 13.2 14.3 12.8 14 12.5L12 10.5C11.7 10.2 11.3 10.2 11 10.5L10.2 11.3C8.8 10.3 5.7 7.2 4.7 5.8L5.5 5C5.8 4.7 5.8 4.3 5.5 4L3.5 2Z" stroke="#C9A84C" stroke-width="1"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Telefón</div>
+            <div class="contact-detail-value">+421 918 833 379</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-icon">
+            <svg viewBox="0 0 16 16" fill="none">
+              <circle cx="8" cy="8" r="6.5" stroke="#C9A84C" stroke-width="1"/>
+              <path d="M8 1.5C8 1.5 6 4 6 8C6 12 8 14.5 8 14.5" stroke="#C9A84C" stroke-width="1"/>
+              <path d="M8 1.5C8 1.5 10 4 10 8C10 12 8 14.5 8 14.5" stroke="#C9A84C" stroke-width="1"/>
+              <line x1="1.5" y1="8" x2="14.5" y2="8" stroke="#C9A84C" stroke-width="1"/>
+            </svg>
+          </div>
+          <div>
+            <div class="contact-detail-label">Web</div>
+            <div class="contact-detail-value">agentshub.sk</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="return false;">
+      <div class="form-group">
+        <label class="form-label">Meno a firma</label>
+        <input type="text" class="form-input" placeholder="Ján Novák, Novák s.r.o.">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="jan@firma.sk">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Typ biznisu</label>
+        <select class="form-select form-input">
+          <option value="" disabled selected>Vyberte odvetvie</option>
+          <option>E-shop</option>
+          <option>Realitná kancelária</option>
+          <option>Klinika / zdravotníctvo</option>
+          <option>Účtovníctvo</option>
+          <option>Právnické služby</option>
+          <option>Iné</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Správa (nepovinné)</label>
+        <textarea class="form-textarea" placeholder="Opíšte váš hlavný problém, ktorý chcete riešiť..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Odoslať dopyt →</button>
+    </form>
+  </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        Agents<span>Hub</span>
+      </div>
+      <div class="footer-copy">© 2026 AgentsHub. Všetky práva vyhradené.</div>
+      <div class="footer-links">
+        <a href="#">GDPR</a>
+        <a href="#">Podmienky</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<!-- CONSENT MODAL -->
+<div id="consentModalOverlay" class="modal-overlay" onclick="handleOverlayClick(event,'consentModalOverlay')">
+  <div class="consent-modal">
+    <div class="consent-modal-title">Pred začatím chatu</div>
+    <p class="consent-modal-text">Váš rozhovor s AI asistentom môže obsahovať osobné údaje. Pred pokračovaním prosím potvrďte súhlas.</p>
+    <div class="consent-checkbox-row">
+      <input type="checkbox" id="consentCheckbox" onchange="updateConsentBtn()">
+      <label for="consentCheckbox">Súhlasím so spracovaním osobných údajov za účelom obchodnej komunikácie. (<a href="#">Zásady ochrany</a>)</label>
+    </div>
+    <button class="btn-start-chat" id="startChatBtn" onclick="startChat()" disabled>Začať rozhovor</button>
+  </div>
+</div>
+
+<!-- CHAT MODAL -->
+<div id="chatModalOverlay" class="modal-overlay" onclick="handleOverlayClick(event,'chatModalOverlay')">
+  <div class="chat-modal">
+    <div class="chat-header">
+      <div>
+        <div class="chat-header-title">AI asistent AgentsHub</div>
+        <div class="chat-header-sub">Pýtajte sa na AI agentov pre váš biznis</div>
+      </div>
+      <button class="chat-close-btn" onclick="closeChatModal()" aria-label="Zavrieť">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-area">
+      <textarea class="chat-input" id="chatInput" placeholder="Napíšte správu…" rows="1"
+        onkeydown="handleChatKeydown(event)" oninput="autoResize(this)"></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()" aria-label="Odoslať">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8L14 2L8 14L7 9L2 8Z" fill="#F7F3EC" stroke="#F7F3EC" stroke-width="0.5" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let chatHistory = [];
+
+  function openConsentModal() {
+    document.getElementById('consentModalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeConsentModal() {
+    document.getElementById('consentModalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+    document.getElementById('consentCheckbox').checked = false;
+    document.getElementById('startChatBtn').disabled = true;
+  }
+
+  function updateConsentBtn() {
+    document.getElementById('startChatBtn').disabled =
+      !document.getElementById('consentCheckbox').checked;
+  }
+
+  function startChat() {
+    closeConsentModal();
+    document.getElementById('chatModalOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    if (chatHistory.length === 0) {
+      typeMessage(
+        'ai',
+        'Dobrý deň! Som AI asistent AgentsHub. Rád vám pomôžem zodpovedať otázky o AI agentoch pre váš biznis. Čím môžem pomôcť?'
+      );
+    }
+    setTimeout(() => document.getElementById('chatInput').focus(), 100);
+  }
+
+  function closeChatModal() {
+    document.getElementById('chatModalOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(event, overlayId) {
+    if (event.target.id === overlayId) {
+      if (overlayId === 'consentModalOverlay') closeConsentModal();
+      if (overlayId === 'chatModalOverlay') closeChatModal();
+    }
+  }
+
+  function typeMessage(role, text, typingSpeed = 20) {
+    const messagesEl = document.getElementById('chatMessages');
+    const time = new Date().toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit' });
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'chat-message ' + role;
+    msgDiv.innerHTML =
+      '<div class="chat-bubble"></div>' +
+      '<div class="chat-message-time">' + time + '</div>';
+
+    messagesEl.appendChild(msgDiv);
+    const bubble = msgDiv.querySelector('.chat-bubble');
+    let index = 0;
+    const interval = setInterval(() => {
+      bubble.innerHTML = text.slice(0, index + 1).replace(/\n/g, '<br>');
+      index += 1;
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      if (index >= text.length) {
+        clearInterval(interval);
+        chatHistory.push({ role: 'assistant', content: text });
+      }
+    }, typingSpeed);
+  }
+
+  function addMessage(role, text) {
+    const messagesEl = document.getElementById('chatMessages');
+    const time = new Date().toLocaleTimeString('sk-SK', { hour: '2-digit', minute: '2-digit' });
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'chat-message ' + role;
+    msgDiv.innerHTML =
+      '<div class="chat-bubble">' + text.replace(/\n/g, '<br>') + '</div>' +
+      '<div class="chat-message-time">' + time + '</div>';
+    messagesEl.appendChild(msgDiv);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    if (role === 'user') {
+      chatHistory.push({ role: 'user', content: text });
+    } else if (role === 'ai') {
+      chatHistory.push({ role: 'assistant', content: text });
+    }
+  }
+
+  function showTyping() {
+    const messagesEl = document.getElementById('chatMessages');
+    const div = document.createElement('div');
+    div.id = 'typingIndicator';
+    div.className = 'chat-message ai';
+    div.innerHTML = '<div class="chat-typing"><span></span><span></span><span></span></div>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  function removeTyping() {
+    const el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+  }
+
+  async function sendMessage() {
+    const input = document.getElementById('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = '';
+    input.style.height = 'auto';
+
+    const sendBtn = document.getElementById('chatSendBtn');
+    sendBtn.disabled = true;
+    input.disabled = true;
+
+    addMessage('user', text);
+    showTyping();
+
+    try {
+      const response = await fetch('/.netlify/functions/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: chatHistory }),
+      });
+
+      removeTyping();
+
+      if (!response.ok) throw new Error('server error');
+
+      const data = await response.json();
+      addMessage('ai', data.reply);
+    } catch (err) {
+      removeTyping();
+      addMessage('ai', 'Prepáčte, nastala technická chyba. Skúste to znova alebo nás kontaktujte priamo na juraj@agentshub.sk.');
+    } finally {
+      sendBtn.disabled = false;
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  function handleChatKeydown(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeChatModal();
+      closeConsentModal();
+    }
+  });
+</script>
+
+</body>
+</html>
